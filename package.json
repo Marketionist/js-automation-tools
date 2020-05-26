@@ -1,0 +1,37 @@
+{
+  "name": "js-automation-tools",
+  "version": "0.0.1",
+  "description": "A collection of scripts for javascript test automation",
+  "main": "index.js",
+  "engines": {
+    "node": ">=8.x.x"
+  },
+  "scripts": {
+    "lint": "node_modules/.bin/eslint *.js tests/**/*.js",
+    "test": "node tests/test1.js",
+    "patch": "npm version patch -m \"Bumped up package version to %s\" && git push && git push origin --tags && npm publish",
+    "minor": "npm version minor -m \"Bumped up package version to %s\" && git push && git push origin --tags && npm publish",
+    "major": "npm version major -m \"Bumped up package version to %s\" && git push && git push origin --tags && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Marketionist/js-automation-tools"
+  },
+  "keywords": [
+    "js-automation-tools",
+    "js automation tools",
+    "javascript-automation-tools",
+    "javascript automation tools",
+    "e2e-test-helpers",
+    "e2e test helpers",
+    "automation-helpers",
+    "automation helpers",
+    "automation-tools",
+    "automation tools"
+  ],
+  "author": "Dmytro Shpakovskyi",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.1.0"
+  }
+}
