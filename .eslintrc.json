@@ -4,12 +4,7 @@
         "sourceType": "module"
     },
     "extends": [
-        "eslint:recommended",
-        "plugin:testcafe/recommended"
-    ],
-    "plugins": [
-        "testcafe",
-        "cucumber"
+        "eslint:recommended"
     ],
     "env": {
         "browser": true,
@@ -218,13 +213,6 @@
         "max-params": [2, 5],
         "max-statements": 0,
         "no-bitwise": 2,
-        "no-plusplus": 0,
-
-        // Cucumber
-        "cucumber/async-then": 2,
-        "cucumber/expression-type": 2,
-        "cucumber/no-restricted-tags": [2, "wip", "broken", "foo"],
-        // In step definitions they break the concept of "world" being stored in "this"
-        "cucumber/no-arrow-functions": 2
+        "no-plusplus": 0
     }
 }
