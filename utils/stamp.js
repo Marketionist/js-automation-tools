@@ -5,7 +5,7 @@
 let stamp = {
     _timestamp: '',
     resetTimestamp: function () {
-        this._timestamp = new Date().getTime().toString();
+        this._timestamp = (new Date().getTime() + 1).toString();
         process.env.TIMESTAMP = this._timestamp;
 
         console.log(`process.env.TIMESTAMP: ${process.env.TIMESTAMP}`);
