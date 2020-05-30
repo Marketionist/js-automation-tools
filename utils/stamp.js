@@ -4,7 +4,7 @@
 
 let stamp = {
     _timestamp: '',
-    resetTimestamp: function () {
+    _getNewTimestamp: function () {
         let counter = 1;
 
         return function () {
@@ -30,6 +30,7 @@ let stamp = {
             return process.env.TIMESTAMP;
         };
     },
+    resetTimestamp: this._getNewTimestamp(),
     getTimestamp: function () {
         process.env.TIMESTAMP = this._timestamp.length > 0 ?
             this._timestamp : this.resetTimestamp();
