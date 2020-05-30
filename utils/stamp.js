@@ -4,7 +4,7 @@
 
 let stamp = {
     _timestamp: '',
-    resetTimestamp: function () {
+    _getNewTimestamp: function () {
         let counter = 1;
 
         return function () {
@@ -37,5 +37,7 @@ let stamp = {
         return process.env.TIMESTAMP;
     }
 };
+
+stamp.resetTimestamp = stamp._getNewTimestamp();
 
 module.exports = stamp;
