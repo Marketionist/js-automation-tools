@@ -4,38 +4,26 @@
 
 let stamp = {
     _timestamp: '',
-    _initiateTimestamp: function () {
-        let counter = 0;
+    resetTimestamp: function () {
+        if (this._timestamp.length > 0) {
+            // If timestamp already exists, increment it by 1
+            this._timestamp = (parseInt(this._timestamp, 10) + 1).toString();
+        } else {
+            // Initiate timestamp
+            this._timestamp = new Date().getTime().toString();
+        }
 
-        return function () {
-            if (counter > 1) {
-                // For each new call after the first, add 1 to timestamp
-                this._timestamp = (parseInt(this._timestamp, 10) + 1)
-                    .toString();
-            } else {
-                this._timestamp = new Date().getTime().toString();
-            }
+        process.env.TIMESTAMP = this._timestamp;
 
-            process.env.TIMESTAMP = this._timestamp;
+        return process.env.TIMESTAMP;
+    },
+    getTimestamp: function () {
+        process.env.TIMESTAMP = this._timestamp.length > 0 ?
+            this._timestamp :
+            this.resetTimestamp();
 
-            if (counter > 1) {
-                // For each new call after the first, log the value
-                console.log(`process.env.TIMESTAMP: ${process.env.TIMESTAMP}`);
-            }
-
-            counter += 1;
-
-            return process.env.TIMESTAMP;
-        };
+        return process.env.TIMESTAMP;
     }
-};
-
-stamp.resetTimestamp = stamp._initiateTimestamp();
-stamp.getTimestamp = function () {
-    process.env.TIMESTAMP = stamp._timestamp.length > 0 ?
-        stamp._timestamp : stamp.resetTimestamp();
-
-    return process.env.TIMESTAMP;
 };
 
 module.exports = stamp;
