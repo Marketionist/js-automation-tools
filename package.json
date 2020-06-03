@@ -1,6 +1,6 @@
 {
   "name": "js-automation-tools",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A collection of scripts for javascript test automation",
   "main": "index.js",
   "engines": {
