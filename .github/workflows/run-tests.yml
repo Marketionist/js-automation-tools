@@ -20,7 +20,7 @@ jobs:
       matrix:
         os:
           - ubuntu-20.04
-        node-version: [8.x, 9.x, 10.x, 12.x, 13.x, 14.x]
+        node-version: [10.x, 12.x, 13.x, 14.x]
 
     steps:
       - name: Git checkout
@@ -33,7 +33,7 @@ jobs:
       - run: echo "Test file" >> tests/test_text.txt
         env:
           CI: true
-      - run: npm run install-all
+      - run: npm install
         env:
           CI: true
       - run: npm run lint
