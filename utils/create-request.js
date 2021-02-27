@@ -9,17 +9,20 @@ const parseUrl = require('url').parse;
 /**
  * Handles response from request and prints out response status, headers, body
  * @param {Object} response
+ * @param {Number} logLevel must be an integer: 0 or 1 or 2
  * @param {Function} callbackFunction
  */
-function handleResponse (response, callbackFunction) {
+function _handleResponse (response, logLevel, callbackFunction) {
     const spacesToIndent = 4;
 
     let data = '';
 
-    console.log(`\nResponse status: ${response.statusCode}`);
+    if (logLevel === 1 || logLevel === 2) {
+        console.log(`\nResponse status: ${response.statusCode}`);
 
-    if (response.headers) {
-        console.log(`\nResponse headers: ${JSON.stringify(response.headers, null, spacesToIndent)}`);
+        if (response.headers && logLevel === 2) {
+            console.log(`\nResponse headers: ${JSON.stringify(response.headers, null, spacesToIndent)}`);
+        }
     }
 
     response.setEncoding('utf8');
@@ -31,7 +34,9 @@ function handleResponse (response, callbackFunction) {
     response.on('end', () => {
         let res = data.length > 0 ? data : 'empty';
 
-        console.log(`\nResponse body: ${res}`);
+        if (logLevel === 1 || logLevel === 2) {
+            console.log(`\nResponse body: ${res}`);
+        }
         // Resolve after response was finished and all data from response was accumulated
         callbackFunction(data);
     });
@@ -43,13 +48,15 @@ function handleResponse (response, callbackFunction) {
  * @param {String} requestUrl
  * @param {String} headersString
  * @param {String} bodyString
+ * @param {Number} logLevel must be an integer: 0 or 1 or 2
  * @returns {Promise} response
  */
 function createRequest (
     method,
     requestUrl,
     headersString = '',
-    bodyString = ''
+    bodyString = '',
+    logLevel = 0
 ) {
     return new Promise((resolve, reject) => {
         // Check incoming body string to have proper JSON inside of it
@@ -81,11 +88,11 @@ function createRequest (
 
         if (requestUrl.includes('https')) {
             req = https.request(options, (res) => {
-                handleResponse(res, resolve);
+                _handleResponse(res, logLevel, resolve);
             });
         } else {
             req = http.request(options, (res) => {
-                handleResponse(res, resolve);
+                _handleResponse(res, logLevel, resolve);
             });
         }
 

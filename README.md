@@ -13,7 +13,7 @@ Node.js: 8.x, 9.x, 10.x, 11.x, 12.x, 13.x, 14.x
 * [Installation](#installation)
 * [Generate timestamp or random digits](#generate-timestamp-or-random-digits)
 * [Send GET, POST and other requests](#send-get-post-and-other-requests)
-* [Read directories and get files](#read-directories-and-get-files)
+* [Read directories](#read-directories)
 * [Contributing](#contributing)
 * [Thanks](#thanks)
 
@@ -45,9 +45,14 @@ console.log(process.env.TIMESTAMP); // '1588558255810'
 ```
 
 ## Send GET, POST and other requests
-Send request to any URL and get response. Function should be called with
-arguments: method, request URL, headers, body (or just empty strings '' if any
-argument is not required in your request):
+Send request to any URL and get response. `createRequest` function accepts 5
+arguments:
+1. Method - string (`'GET'`, `'POST'`, `'DELETE'`, ...)
+2. Request URL - string
+3. Headers - string
+4. Body - string
+5. Log level - number (`0`, `1`, `2`)
+or just empty strings '' if any argument is not required in your request):
 ```
 const { createRequest } = require('js-automation-tools');
 
@@ -55,24 +60,37 @@ const responseGet = await createRequest(
     'GET',
     'https://www.google.com/',
     '',
-    ''
+    '',
+    2
 );
 
 const responsePost = await createRequest(
     'POST',
     'http://httpbin.org/post',
     '{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }',
-    '{ "test1": 1, "test2": 2 }'
+    '{ "test1": 1, "test2": 2 }',
+    1
 );
 ```
 
-## Read directories and get files
+By default logs are disabled (log level set to `0`). You can set logging output
+to one of 3 levels:
+- `0` - logs disabled (by default)
+- `1` - partial logs are enabled - prints out:
+  * Response status code
+  * Response body
+- `2` - full logs are enabled - prints out:
+  * Response status code
+  * Response headers
+  * Response body
+
+## Read directories
 Read the array of directories and get the array of files from this directories:
 ```
 const { readDirectories } = require('js-automation-tools');
 
-const pathToDirectory1 = path.join(__dirname, '/directory1');
-const pathToDirectory2 = path.join(__dirname, '../..', '/directory2');
+const pathToDirectory1 = path.join(__dirname, 'directory1');
+const pathToDirectory2 = path.join(__dirname, '..', '..', 'directory2');
 
 const allFiles = await readDirectories([pathToDirectory1, pathToDirectory2]);
 ```
@@ -85,4 +103,4 @@ request and we will help you refine it along the way.
 
 ## Thanks
 If this package was helpful to you, please give it a **★ Star** on
-[Github](https://github.com/Marketionist/js-automation-tools).
+[GitHub](https://github.com/Marketionist/js-automation-tools).
