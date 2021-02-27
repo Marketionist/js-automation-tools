@@ -2,7 +2,7 @@
 
 A collection of scripts for javascript test automation
 
-[![Build Status](https://travis-ci.org/Marketionist/js-automation-tools.svg?branch=master)](https://travis-ci.org/Marketionist/js-automation-tools)
+[![Actions Status](https://github.com/Marketionist/js-automation-tools/workflows/Build%20and%20Test/badge.svg)](https://github.com/Marketionist/js-automation-tools/actions)
 [![npm version](https://img.shields.io/npm/v/js-automation-tools.svg)](https://www.npmjs.com/package/js-automation-tools)
 [![NPM License](https://img.shields.io/npm/l/js-automation-tools.svg)](https://github.com/Marketionist/js-automation-tools/blob/master/LICENSE)
 
@@ -47,12 +47,14 @@ console.log(process.env.TIMESTAMP); // '1588558255810'
 ## Send GET, POST and other requests
 Send request to any URL and get response. `createRequest` function accepts 5
 arguments:
-1. Method - string (`'GET'`, `'POST'`, `'DELETE'`, ...)
-2. Request URL - string
-3. Headers - string
-4. Body - string
-5. Log level - number (`0`, `1`, `2`)
-or just empty strings '' if any argument is not required in your request):
+1. Method - string (`'GET'` or `'POST'` or `'DELETE'` or any other)
+2. Request URL - string (for example: `'https://www.google.com/'`)
+3. Headers - string (for example: `'{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }'`)
+4. Body - string (for example: `'{ "test1": 1, "test2": 2 }'`)
+5. Log level - number (`0` or `1` or `2`)
+
+Or just call `createRequest` function with empty string (`''`) instead of any
+argument if it's not required in your request):
 ```
 const { createRequest } = require('js-automation-tools');
 
