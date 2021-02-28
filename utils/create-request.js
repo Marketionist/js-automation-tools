@@ -18,10 +18,10 @@ function _handleResponse (response, logLevel, callbackFunction) {
     let data = '';
 
     if (logLevel === 1 || logLevel === 2) {
-        console.log(`\nResponse status: ${response.statusCode}`);
+        console.log(`\n-> Response status: ${response.statusCode}`);
 
         if (response.headers && logLevel === 2) {
-            console.log(`\nResponse headers: ${JSON.stringify(response.headers, null, spacesToIndent)}`);
+            console.log(`\n-> Response headers: ${JSON.stringify(response.headers, null, spacesToIndent)}`);
         }
     }
 
@@ -35,7 +35,7 @@ function _handleResponse (response, logLevel, callbackFunction) {
         let res = data.length > 0 ? data : 'empty';
 
         if (logLevel === 1 || logLevel === 2) {
-            console.log(`\nResponse body: ${res}`);
+            console.log(`\n-> Response body: ${res}`);
         }
         // Resolve after response was finished and all data from response was accumulated
         callbackFunction(data);
@@ -52,12 +52,22 @@ function _handleResponse (response, logLevel, callbackFunction) {
  * @returns {Promise} response
  */
 function createRequest (
-    method,
-    requestUrl,
+    method = '',
+    requestUrl = '',
     headersString = '',
     bodyString = '',
     logLevel = 0
 ) {
+    if (method.length === 0) {
+        console.log('\n-> Problem with request method - please specify it ' +
+            'as a string (for example: \'GET\' or \'POST\' or \'DELETE\' or ' +
+            'any other)');
+    }
+    if (requestUrl.length === 0) {
+        console.log('\n-> Problem with request URL - please specify it as a ' +
+            'string (for example: \'https://www.google.com/\')');
+    }
+
     return new Promise((resolve, reject) => {
         // Check incoming body string to have proper JSON inside of it
         const requestBody = bodyString.length > 0 ? JSON.stringify(JSON.parse(bodyString)) : '';
@@ -97,7 +107,7 @@ function createRequest (
         }
 
         req.on('error', (err) => {
-            console.log(`Problem with request: ${err.message}`);
+            console.log(`\n-> Problem with request: ${err.message}`);
             reject(err);
         });
 
