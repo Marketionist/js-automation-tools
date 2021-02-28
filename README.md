@@ -45,16 +45,16 @@ console.log(process.env.TIMESTAMP); // '1588558255810'
 ```
 
 ## Send GET, POST and other requests
-Send request to any URL and get response. `createRequest` function accepts 5
+Send request to any URL and get response - `createRequest` function accepts 5
 arguments:
-1. Method - string (`'GET'` or `'POST'` or `'DELETE'` or any other)
+1. Method - string (for example: `'GET'` or `'POST'` or `'DELETE'` or any other)
 2. Request URL - string (for example: `'https://www.google.com/'`)
 3. Headers - string (for example: `'{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }'`)
 4. Body - string (for example: `'{ "test1": 1, "test2": 2 }'`)
-5. Log level - number (`0` or `1` or `2`)
+5. Log level - number (for example: `0` or `1` or `2`)
 
 Or just call `createRequest` function with empty string (`''`) instead of any
-argument if it's not required in your request):
+argument if it's not needed in your request:
 ```
 const { createRequest } = require('js-automation-tools');
 
