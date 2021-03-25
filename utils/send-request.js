@@ -4,7 +4,7 @@
 
 const http = require('http');
 const https = require('https');
-const parseUrl = require('url').parse;
+const url = require('url');
 
 /**
  * Handles response from request and prints out response status, headers, body
@@ -43,21 +43,31 @@ function _handleResponse (response, logLevel, callbackFunction) {
 }
 
 /**
- * Creates request
- * @param {String} method
- * @param {String} requestUrl
- * @param {String} headersString
- * @param {String} bodyString
- * @param {Number} logLevel must be an integer: 0 or 1 or 2
+ * Sends request
+ * @param {String} method GET or POST or DELETE or any other
+ * @param {String} requestUrl URL to send request to
+ * @param {String} headersString string that contains request headers
+ * @param {String} bodyString string that contains request body
+ * @param {Number} logLevel must be an integer: 0 or 1 or 2, defaults to 0 (no logs)
  * @returns {Promise} response
  */
-function createRequest (
+function sendRequest (
     method = '',
     requestUrl = '',
     headersString = '',
     bodyString = '',
     logLevel = 0
 ) {
+    if (typeof arguments[0] === 'object') {
+        /* eslint-disable no-param-reassign */
+        method = arguments[0].method || '';
+        requestUrl = arguments[0].requestUrl || '';
+        headersString = arguments[0].headersString || '';
+        bodyString = arguments[0].bodyString || '';
+        logLevel = arguments[0].logLevel || 0;
+        /* eslint-enable no-param-reassign */
+    }
+
     if (method.length === 0) {
         console.log('\n-> Problem with request method - please specify it ' +
             'as a string (for example: \'GET\' or \'POST\' or \'DELETE\' or ' +
@@ -82,12 +92,12 @@ function createRequest (
                 'Content-Length': Buffer.byteLength(requestBody)
             };
 
-        const parsedUrl = parseUrl(requestUrl);
+        const parsedUrl = new url.URL(requestUrl);
         const options = {
             protocol: parsedUrl.protocol,
-            auth: parsedUrl.auth,
+            auth: parsedUrl.username ? `${parsedUrl.username}:${parsedUrl.password}` : '',
             hostname: parsedUrl.hostname,
-            path: parsedUrl.path,
+            path: parsedUrl.search ? `${parsedUrl.pathname}${parsedUrl.search}` : parsedUrl.pathname,
             hash: parsedUrl.hash,
             port: parsedUrl.port,
             method: method,
@@ -118,4 +128,4 @@ function createRequest (
     });
 }
 
-module.exports = createRequest;
+module.exports = sendRequest;
