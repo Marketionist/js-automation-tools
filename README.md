@@ -1,6 +1,6 @@
 # js-automation-tools
 
-A collection of scripts for javascript test automation
+A collection of scripts for JavaScript test automation
 
 [![Actions Status](https://github.com/Marketionist/js-automation-tools/workflows/Build%20and%20Test/badge.svg)](https://github.com/Marketionist/js-automation-tools/actions)
 [![npm version](https://img.shields.io/npm/v/js-automation-tools.svg)](https://www.npmjs.com/package/js-automation-tools)
@@ -45,7 +45,7 @@ console.log(process.env.TIMESTAMP); // '1588558255810'
 ```
 
 ## Send GET, POST and other requests
-Send request to any URL and get response - `createRequest` function accepts 5
+Send request to any URL and get response - `sendRequest` function accepts 5
 arguments:
 1. Method - string (for example: `'GET'` or `'POST'` or `'DELETE'` or any other)
 2. Request URL - string (for example: `'https://www.google.com/'`)
@@ -53,12 +53,12 @@ arguments:
 4. Body - string (for example: `'{ "test1": 1, "test2": 2 }'`)
 5. Log level - number (for example: `0` or `1` or `2`)
 
-Or just call `createRequest` function with empty string (`''`) instead of any
+Or just call `sendRequest` function with empty string (`''`) instead of any
 argument if it's not needed in your request:
 ```
-const { createRequest } = require('js-automation-tools');
+const { sendRequest } = require('js-automation-tools');
 
-const responseGet = await createRequest(
+const responseGet = await sendRequest(
     'GET',
     'https://www.google.com/',
     '',
@@ -66,7 +66,7 @@ const responseGet = await createRequest(
     2
 );
 
-const responsePost = await createRequest(
+const responsePost = await sendRequest(
     'POST',
     'http://httpbin.org/post',
     '{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }',
@@ -75,7 +75,29 @@ const responsePost = await createRequest(
 );
 ```
 
-By default logs are disabled (log level set to `0`). You can set logging output
+*OR* you can specify the arguments inside the object as `key: value` pairs:
+
+```
+const { sendRequest } = require('js-automation-tools');
+
+const responseGet = await sendRequest({
+    method: 'GET',
+    requestUrl: 'https://www.google.com/'
+});
+
+const responsePost = await sendRequest({
+    method: 'POST',
+    requestUrl: 'http://httpbin.org/post',
+    headersString: '{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }',
+    bodyString: '{ "test1": 1, "test2": 2 }',
+    logLevel: 1
+});
+```
+
+> Note: you can also use `createRequest` function - it is an alias and works
+> exactly the same as `sendRequest`.
+
+By default logs are disabled (`logLevel` set to `0`). You can set logging output
 to one of 3 levels:
 - `0` - logs disabled (by default)
 - `1` - partial logs are enabled - prints out:
