@@ -75,7 +75,7 @@ const responsePost = await sendRequest(
 );
 ```
 
-*OR* you can specify the arguments inside the object as `key: value` pairs:
+**OR** you can specify the arguments inside the object as `key: value` pairs:
 
 ```
 const { sendRequest } = require('js-automation-tools');
@@ -95,7 +95,24 @@ const responsePost = await sendRequest({
 ```
 
 > Note: you can also use `createRequest` function - it is an alias and works
-> exactly the same as `sendRequest`.
+> exactly the same as `sendRequest`, for example:
+
+```
+const { createRequest } = require('js-automation-tools');
+
+const responseGet = await createRequest({
+    method: 'GET',
+    requestUrl: 'https://www.google.com/'
+});
+
+const responsePost = await createRequest({
+    method: 'POST',
+    requestUrl: 'http://httpbin.org/post',
+    headersString: '{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }',
+    bodyString: '{ "test1": 1, "test2": 2 }',
+    logLevel: 1
+});
+```
 
 By default logs are disabled (`logLevel` set to `0`). You can set logging output
 to one of 3 levels:
