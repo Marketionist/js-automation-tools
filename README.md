@@ -7,7 +7,7 @@ A collection of scripts for JavaScript test automation
 [![NPM License](https://img.shields.io/npm/l/js-automation-tools.svg)](https://github.com/Marketionist/js-automation-tools/blob/master/LICENSE)
 
 ## Supported versions
-Node.js: 8.x, 9.x, 10.x, 11.x, 12.x, 13.x, 14.x
+Node.js: 8.x, 9.x, 10.x, 11.x, 12.x, 13.x, 14.x, 15.x, 16.x, 17.x, 18.x
 
 ## Table of contents
 * [Installation](#installation)
