@@ -7,8 +7,8 @@
     "node": ">=8.x.x"
   },
   "scripts": {
-    "lint": "node_modules/.bin/eslint index.js tests/**/*.js",
-    "test": "node ./tests/test1.js",
+    "lint": "node ./node_modules/.bin/eslint *.js **/*.js",
+    "test": "echo \"Test file\" >> tests/test_text.txt && node ./tests/test1.js && rm -rf tests/test_text.txt",
     "patch": "npm version patch -m \"Bumped up package version to %s\" && git push && git push origin --tags && npm publish",
     "minor": "npm version minor -m \"Bumped up package version to %s\" && git push && git push origin --tags && npm publish",
     "major": "npm version major -m \"Bumped up package version to %s\" && git push && git push origin --tags && npm publish"
