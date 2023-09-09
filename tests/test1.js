@@ -16,6 +16,12 @@ console.log(
     `${newRandomDigits === process.env.TIMESTAMP} ${process.env.TIMESTAMP}`
 );
 
+if (parseInt(newRandomDigits) > parseInt(randomDigits)) {
+    console.log('randomDigits look ok!');
+} else {
+    throw new Error('newRandomDigits should be more than randomDigits');
+}
+
 (async () => {
     // Enable all logs output
     const logLevel = 2;
@@ -52,5 +58,10 @@ console.log(
     allFiles.map((value) => {
         console.log(value);
     });
-})();
 
+    if (allFiles.some(value => value.includes('test_text.txt'))) {
+        console.log('allFiles array looks ok!');
+    } else {
+        throw new Error('allFiles array should include "test_text.txt"');
+    }
+})();
