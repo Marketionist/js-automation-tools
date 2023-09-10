@@ -16,7 +16,11 @@ console.log(
     `${newRandomDigits === process.env.TIMESTAMP} ${process.env.TIMESTAMP}`
 );
 
-if (parseInt(newRandomDigits) > parseInt(randomDigits)) {
+const baseDecimal = 10;
+
+if (
+    parseInt(newRandomDigits, baseDecimal) > parseInt(randomDigits, baseDecimal)
+) {
     console.log('randomDigits look ok!');
 } else {
     throw new Error('newRandomDigits should be more than randomDigits');
@@ -59,7 +63,7 @@ if (parseInt(newRandomDigits) > parseInt(randomDigits)) {
         console.log(value);
     });
 
-    if (allFiles.some(value => value.includes('test_text.txt'))) {
+    if (allFiles.some((value) => value.includes('test_text.txt'))) {
         console.log('allFiles array looks ok!');
     } else {
         throw new Error('allFiles array should include "test_text.txt"');
