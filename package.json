@@ -1,7 +1,7 @@
 {
   "name": "js-automation-tools",
   "version": "1.2.2",
-  "description": "A collection of scripts for javascript test automation",
+  "description": "A collection of scripts for JavaScript test automation",
   "main": "index.js",
   "engines": {
     "node": ">=8.x.x"
