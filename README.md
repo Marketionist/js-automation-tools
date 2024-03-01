@@ -12,6 +12,7 @@ Node.js: 8.x, 9.x, 10.x, 11.x, 12.x, 13.x, 14.x, 15.x, 16.x, 17.x, 18.x, 19.x, 2
 ## Table of contents
 * [Installation](#installation)
 * [Generate timestamp or random digits](#generate-timestamp-or-random-digits)
+* [Generate current date and time](#generate-current-date-and-time)
 * [Send GET, POST and other requests](#send-get-post-and-other-requests)
 * [Read directories](#read-directories)
 * [Contributing](#contributing)
@@ -42,6 +43,21 @@ To get new timestamp:
 const newRandomDigits = stamp.resetTimestamp(); // '1588558255810'
 
 console.log(process.env.TIMESTAMP); // '1588558255810'
+```
+
+## Generate current date and time
+Sometimes you need to generate current date and time. It can easily be done like this:
+```
+const { dateTime } = require('js-automation-tools');
+
+const currentDateTime = dateTime.generateDateTime(); // '2024-03-01T07:33:28'
+const currentDateTimePlusHour = dateTime.generateDateTimePlusHours(1); // '2024-03-01T08:33:28'
+```
+It will also write generated digits to a global environment variable
+`process.env.DATETIME` and `process.env.DATETIME_PLUS_HOURS` that can be easily accessed in any place of your tests:
+```
+console.log(process.env.DATETIME); // '2024-03-01T07:33:28'
+console.log(process.env.DATETIME_PLUS_HOURS); // '2024-03-01T08:33:28'
 ```
 
 ## Send GET, POST and other requests
