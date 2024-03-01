@@ -43,7 +43,7 @@ console.log(
 );
 
 if (
-    Date.parse(currentDateTimePlusHour) > Date.parse(currentDateTimePlusMinute)
+    Date.parse(currentDateTimePlusHour) > Date.parse(currentDateTime)
 ) {
     console.log('dateTime looks ok!');
 } else {
