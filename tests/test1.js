@@ -1,5 +1,5 @@
 const path = require('path');
-const { stamp, createRequest, sendRequest, readDirectories } = require('../index.js');
+const { stamp, dateTime, createRequest, sendRequest, readDirectories } = require('../index.js');
 
 // Test randomDigits
 const randomDigits = stamp.getTimestamp();
@@ -24,6 +24,30 @@ if (
     console.log('randomDigits look ok!');
 } else {
     throw new Error('newRandomDigits should be more than randomDigits');
+}
+
+// Test dateTime
+const currentDateTime = dateTime.generateDateTime();
+
+console.log(
+    'process.env.DATETIME: ' +
+    `${currentDateTime === process.env.DATETIME} ${process.env.DATETIME}`
+);
+
+const currentDateTimePlusHour = dateTime.generateDateTimePlusHours(1);
+
+console.log(
+    'process.env.DATETIME_PLUS_HOURS: ' +
+    `${currentDateTimePlusHour === process.env.DATETIME_PLUS_HOURS} ` +
+    process.env.DATETIME_PLUS_HOURS
+);
+
+if (
+    (Date.parse(currentDateTimePlusHour) > Date.parse(currentDateTime))
+) {
+    console.log('dateTime looks ok!');
+} else {
+    throw new Error('currentDateTimePlus Hour should be more than currentDateTime');
 }
 
 (async () => {
