@@ -26,6 +26,19 @@ let dateTime = {
         ).toISOString().split('.')[0];
 
         return process.env.DATETIME_PLUS_HOURS;
+    },
+    generateDateTimePlusMinutes: function (minutes) {
+        process.env.DATETIME_PLUS_MINUTES = new Date(
+            new Date(Date.now() +
+                (
+                    minutes *
+                    dateTime._secondsInMinute *
+                    dateTime._millisecondsInSecond
+                )
+            ).toString().split('GMT')[0] + ' UTC'
+        ).toISOString().split('.')[0];
+
+        return process.env.DATETIME_PLUS_MINUTES;
     }
 };
 
