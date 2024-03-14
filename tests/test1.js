@@ -42,12 +42,30 @@ console.log(
     process.env.DATETIME_PLUS_HOURS
 );
 
+const currentDateTimePlusMinute = dateTime.generateDateTimePlusMinutes(1);
+
+console.log(
+    'process.env.DATETIME_PLUS_MINUTES: ' +
+    `${currentDateTimePlusMinute === process.env.DATETIME_PLUS_MINUTES} ` +
+    process.env.DATETIME_PLUS_MINUTES
+);
+
+const currentDateTimePlusSecond = dateTime.generateDateTimePlusSeconds(1);
+
+console.log(
+    'process.env.DATETIME_PLUS_SECONDS: ' +
+    `${currentDateTimePlusSecond === process.env.DATETIME_PLUS_SECONDS} ` +
+    process.env.DATETIME_PLUS_SECONDS
+);
+
 if (
-    Date.parse(currentDateTimePlusHour) > Date.parse(currentDateTime)
+    (Date.parse(currentDateTimePlusHour) > Date.parse(currentDateTimePlusMinute)) &&
+        (Date.parse(currentDateTimePlusMinute) > Date.parse(currentDateTimePlusSecond)) &&
+            (Date.parse(currentDateTimePlusSecond) > Date.parse(currentDateTime))
 ) {
     console.log('dateTime looks ok!');
 } else {
-    throw new Error('currentDateTimePlus Hour should be more than currentDateTime');
+    throw new Error('currentDateTimePlus Hour/Minute/Second should be more than currentDateTime');
 }
 
 (async () => {
