@@ -11,9 +11,7 @@ for any bug or feature request. This allows discussion on the proper course of
 action to take before coding begins.
 
 ## General rules
-Most of the information you need to start contributing code changes can be found
-[here](https://guides.github.com/activities/contributing-to-open-source/).
-In short: fork, make your changes and submit a pull request (PR).
+Most of the information you need to start contributing code changes can be distilled to: fork, make your changes and submit a pull request (PR).
 
 ## Code Style Guide
 In case your editor does not respect `.editorconfig`, here is a summary of rules:
@@ -27,7 +25,7 @@ In case your editor does not respect `.editorconfig`, here is a summary of rules
 - variable declarations - use `const` and `let`
 
 ### Fork
-Fork the project [on Github](https://github.com/Marketionist/js-automation-tools)
+Fork the project [on GitHub](https://github.com/Marketionist/js-automation-tools)
 and check out your copy locally:
 
 ```shell
@@ -70,7 +68,7 @@ git rebase upstream/master
 
 ### Install all dependencies
 ```shell
-npm run install-all
+npm install
 ```
 
 ### Test
