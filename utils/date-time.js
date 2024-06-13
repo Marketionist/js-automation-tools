@@ -14,7 +14,7 @@ let dateTime = {
 
         return process.env.DATETIME;
     },
-    //==== Plus functions ======================================================
+    // ==== Plus functions =====================================================
     generateDateTimePlusHours: function (hours) {
         process.env.DATETIME_PLUS_HOURS = new Date(
             new Date(Date.now() + hours *
