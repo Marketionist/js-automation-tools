@@ -77,7 +77,7 @@ console.log(
 );
 
 if (
-    (Date.parse(currentDateTimeMinusHour) < Date.parse(currentDateTime))
+    Date.parse(currentDateTimeMinusHour) < Date.parse(currentDateTime)
 ) {
     console.log('dateTime minus looks ok!');
 } else {
