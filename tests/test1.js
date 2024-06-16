@@ -63,9 +63,25 @@ if (
         (Date.parse(currentDateTimePlusMinute) > Date.parse(currentDateTimePlusSecond)) &&
             (Date.parse(currentDateTimePlusSecond) > Date.parse(currentDateTime))
 ) {
-    console.log('dateTime looks ok!');
+    console.log('dateTime plus looks ok!');
 } else {
     throw new Error('currentDateTimePlus Hour/Minute/Second should be more than currentDateTime');
+}
+
+const currentDateTimeMinusHour = dateTime.generateDateTimeMinusHours(1);
+
+console.log(
+    'process.env.DATETIME_MINUS_HOURS: ' +
+    `${currentDateTimeMinusHour === process.env.DATETIME_MINUS_HOURS} ` +
+    process.env.DATETIME_MINUS_HOURS
+);
+
+if (
+    Date.parse(currentDateTimeMinusHour) < Date.parse(currentDateTime)
+) {
+    console.log('dateTime minus looks ok!');
+} else {
+    throw new Error('currentDateTimeMinus Hour should be less than currentDateTime');
 }
 
 (async () => {

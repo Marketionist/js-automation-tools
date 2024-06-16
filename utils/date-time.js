@@ -14,6 +14,7 @@ let dateTime = {
 
         return process.env.DATETIME;
     },
+    // ==== Plus functions =====================================================
     generateDateTimePlusHours: function (hours) {
         process.env.DATETIME_PLUS_HOURS = new Date(
             new Date(Date.now() + hours *
@@ -48,6 +49,20 @@ let dateTime = {
         ).toISOString().split('.')[0];
 
         return process.env.DATETIME_PLUS_SECONDS;
+    },
+    // ==== Minus functions ====================================================
+    generateDateTimeMinusHours: function (hours) {
+        process.env.DATETIME_MINUS_HOURS = new Date(
+            new Date(Date.now() - hours *
+                (
+                    dateTime._minutesInHour *
+                    dateTime._secondsInMinute *
+                    dateTime._millisecondsInSecond
+                )
+            ).toString().split('GMT')[0] + ' UTC'
+        ).toISOString().split('.')[0];
+
+        return process.env.DATETIME_MINUS_HOURS;
     }
 };
 
