@@ -7,8 +7,8 @@ const _waitTimeDefault = 1000;
 
 /**
  * Executes a provided function once per a provided amount of milliseconds
- * until this function will return true or the amount of provided attempts will be exceeded
- * @param {Function} func function to execute (if successful - should return true)
+ * until this function will return a truthy value or the amount of provided attempts will be exceeded
+ * @param {Function} func function to execute (if successful - should return a truthy value)
  * @param {Number} attempts number of attempts to retry (default value: 10)
  * @param {Number} waitTime time to wait between retries (in milliseconds, default value: 1000)
  * @returns {Promise} response of a function that was provided for execution
