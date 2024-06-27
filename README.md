@@ -13,6 +13,7 @@ Node.js: 8.x-22.x
 * [Installation](#installation)
 * [Generate timestamp or random digits](#generate-timestamp-or-random-digits)
 * [Generate current date and time](#generate-current-date-and-time)
+* [Async retry](#async-retry)
 * [Send GET, POST and other requests](#send-get-post-and-other-requests)
 * [Read directories](#read-directories)
 * [Contributing](#contributing)
@@ -66,6 +67,18 @@ console.log(process.env.DATETIME_PLUS_MINUTES); // '2024-03-14T00:15:25'
 console.log(process.env.DATETIME_PLUS_SECONDS); // '2024-03-14T00:14:26'
 
 console.log(process.env.DATETIME_MINUS_HOURS); // '2024-03-13T23:14:25'
+```
+
+## Async retry
+Execute a provided function once per a provided amount of milliseconds until this function will return a truthy value or the amount of provided attempts will be exceeded:
+```
+const { asyncRetry } = require('js-automation-tools');
+
+const myFunction = async function () {
+    return await getSomeData();
+}
+
+const result = await asyncRetry(myFunction, 5, 2000) // { data: 'Some data' }
 ```
 
 ## Send GET, POST and other requests
