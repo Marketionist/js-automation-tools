@@ -7,7 +7,7 @@ A collection of scripts for JavaScript test automation
 [![NPM License](https://img.shields.io/npm/l/js-automation-tools.svg)](https://github.com/Marketionist/js-automation-tools/blob/master/LICENSE)
 
 ## Supported versions
-Node.js: 8.x-22.x
+[Node.js](https://nodejs.org/en/download/package-manager): [8.x-22.x](https://nodejs.org/en/about/previous-releases)
 
 ## Table of contents
 * [Installation](#installation)
@@ -70,15 +70,17 @@ console.log(process.env.DATETIME_MINUS_HOURS); // '2024-03-13T23:14:25'
 ```
 
 ## Async retry
+### asyncRetrySimple
 Execute a provided function once per a provided amount of milliseconds until this function will return a truthy value or the amount of provided attempts will be exceeded:
 ```
-const { asyncRetry } = require('js-automation-tools');
+const { asyncRetrySimple } = require('js-automation-tools');
 
 const myFunction = async function () {
     return await getSomeData();
-}
+};
 
-const result = await asyncRetry(myFunction, 5, 2000) // { data: 'Some data' }
+const result = await asyncRetrySimple(myFunction, 5, 2000); // myFunction will be executed up to 5 times every 2 seconds until its result will be truthy
+console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
 ```
 
 ## Send GET, POST and other requests
