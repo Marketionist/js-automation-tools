@@ -79,7 +79,7 @@ const myFunction = async function () {
     return await getSomeData();
 };
 
-const result = await asyncRetry(myFunction, 5, 2000); // myFunction will be executed up to 5 times every 2 seconds until its result will be truthy
+const result = await asyncRetrySimple(myFunction, 5, 2000); // myFunction will be executed up to 5 times every 2 seconds until its result will be truthy
 console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
 ```
 
