@@ -7,7 +7,9 @@ A collection of scripts for JavaScript test automation
 [![NPM License](https://img.shields.io/npm/l/js-automation-tools.svg)](https://github.com/Marketionist/js-automation-tools/blob/master/LICENSE)
 
 ## Supported versions
-[Node.js](https://nodejs.org/en/download/package-manager): [8.x-22.x](https://nodejs.org/en/about/previous-releases)
+[Node.js](https://nodejs.org/en/download/package-manager): 8.x-22.x.
+> Note: if you are choosing a version of Node.js to run with - check
+> [release schedule](https://nodejs.org/en/about/previous-releases).
 
 ## Table of contents
 * [Installation](#installation)
@@ -82,15 +84,30 @@ const myFunction = async function () {
 const result = await asyncRetrySimple(myFunction, 5, 2000); // myFunction will be executed up to 5 times every 2 seconds until its result will be truthy
 console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
 ```
+### asyncRetryCustom
+Execute a provided function once per a provided amount of milliseconds until this function will return a value that upon passing a functionCheck check will be true or the amount of provided attempts will be exceeded:
+```
+const { asyncRetryCustom } = require('js-automation-tools');
+
+const myFunction = async function () {
+    return await getSomeData();
+};
+const checkFunction = async function (result) {
+    return result.statusCode === 200;
+};
+
+const result = await asyncRetryCustom(myFunction, checkFunction, 10, 3000); // myFunction will be executed up to 10 times every 3 seconds until its result statusCode will be 200
+console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
+```
 
 ## Send GET, POST and other requests
 Send request to any URL and get response - `sendRequest` function accepts 5
 arguments:
-1. Method - string (for example: `'GET'` or `'POST'` or `'DELETE'` or any other)
-2. Request URL - string (for example: `'https://www.google.com/'`)
-3. Headers - string (for example: `'{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }'`)
-4. Body - string (for example: `'{ "test1": 1, "test2": 2 }'`)
-5. Log level - number (for example: `0` or `1` or `2`)
+1. Method - string (for example: `'GET'` or `'POST'` or `'DELETE'` or any other).
+2. Request URL - string (for example: `'https://www.google.com/'`).
+3. Headers - string (for example: `'{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }'`).
+4. Body - string (for example: `'{ "test1": 1, "test2": 2 }'`).
+5. Log level - number (for example: `0` or `1` or `2`).
 
 Or just call `sendRequest` function with empty string (`''`) instead of any
 argument if it's not needed in your request:
