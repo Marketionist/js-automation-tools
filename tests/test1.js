@@ -1,5 +1,13 @@
 const path = require('path');
-const { stamp, dateTime, createRequest, sendRequest, readDirectories } = require('../index.js');
+const {
+    stamp,
+    dateTime,
+    asyncRetrySimple,
+    asyncRetryCustom,
+    createRequest,
+    sendRequest,
+    readDirectories
+} = require('../index.js');
 
 // Test randomDigits
 const randomDigits = stamp.getTimestamp();
@@ -87,6 +95,45 @@ if (
 (async () => {
     // Enable all logs output
     const logLevel = 2;
+    // Generate random digits within a provided interval
+    const generateRandomDigit = async function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    };
+    const digitZero = 0;
+    const digitTwo = 2;
+    const digitTen = 10;
+    const digitSeven = 7;
+
+    // Test asyncRetrySimple
+    const myFunctionSimple = async function () {
+        return generateRandomDigit(digitZero, digitTwo);
+    };
+    const asyncRetrySimpleResult = await asyncRetrySimple({
+        functionToExecute: myFunctionSimple,
+        attempts: 5,
+        waitTime: 2000,
+        logLevel: 2
+    });
+
+    console.log(`asyncRetrySimpleResult: ${asyncRetrySimpleResult}`);
+
+    // Test asyncRetryCustom
+    const myFunctionCustom = async function () {
+        return generateRandomDigit(digitZero, digitTen);
+    };
+    const checkFunction = function (result) {
+        return result > digitSeven;
+    };
+
+    const asyncRetryCustomResult = await asyncRetryCustom({
+        functionToExecute: myFunctionCustom,
+        functionToCheck: checkFunction,
+        attempts: 10,
+        waitTime: 3000,
+        logLevel: 2
+    });
+
+    console.log(`asyncRetryCustomResult: ${asyncRetryCustomResult}`);
 
     // Test createRequest
     const responsePost = await createRequest(
