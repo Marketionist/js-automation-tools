@@ -40,12 +40,12 @@ async function asyncRetrySimple (
     const result = new Promise((resolve, reject) => {
         let iteration = 0;
         const intervalId = setInterval(async () => {
-            if (logLevel === 1 || logLevel === 2) {
+            if (logLevel > 0) {
                 console.info(_notificationAttemptNumber, iteration);
             }
             const res = await functionToExecute();
 
-            if (res && logLevel === 2) {
+            if (logLevel === 2) {
                 console.info(_notificationFunctionToExecuteResponse, res);
             }
 
@@ -101,12 +101,12 @@ async function asyncRetryCustom (
     const result = new Promise((resolve, reject) => {
         let iteration = 0;
         const intervalId = setInterval(async () => {
-            if (logLevel === 1 || logLevel === 2) {
+            if (logLevel > 0) {
                 console.info(_notificationAttemptNumber, iteration);
             }
             const res = await functionToExecute();
 
-            if (res && logLevel === 2) {
+            if (logLevel === 2) {
                 console.info(_notificationFunctionToExecuteResponse, res);
             }
 
