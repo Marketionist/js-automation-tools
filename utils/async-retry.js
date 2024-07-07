@@ -7,9 +7,10 @@ const _waitTimeDefault = 1000;
 const _logLevelDefault = 0;
 const _notificationAttemptNumber = '\n-> Running functionToExecute - attempt:';
 const _notificationFunctionToExecuteResponse = '\n-> Response from functionToExecute:';
-const _errorSpecifyFunctionToExecute = '\n-> Problem with functionToExecute function - please specify it';
-const _errorSpecifyFunctionToCheck = '\n-> Problem with functionToCheck function - please specify it';
-const _errorFailedFunctionToExecute = '\n-> Failed to succeed while running functionToExecute in %d attempts';
+const _errorSpecifyFunctionToExecute = '\n-> Please specify functionToExecute function';
+const _errorSpecifyFunctionToCheck = '\n-> Please specify functionToCheck function';
+const _errorFailedFunctionToExecute = '\n-> Failed to succeed while running ' +
+    'functionToExecute - provided number of attempts was exceeded';
 
 /**
  * Executes a provided function once per a provided amount of milliseconds
@@ -56,7 +57,7 @@ async function asyncRetrySimple (
                 iteration++;
             } else {
                 clearInterval(intervalId);
-                return reject(new Error(_errorFailedFunctionToExecute, iteration));
+                return reject(new Error(_errorFailedFunctionToExecute));
             }
         }, waitTime)
     });
@@ -117,7 +118,7 @@ async function asyncRetryCustom (
                 iteration++;
             } else {
                 clearInterval(intervalId);
-                return reject(new Error(_errorFailedFunctionToExecute, iteration));
+                return reject(new Error(_errorFailedFunctionToExecute));
             }
         }, waitTime)
     });
