@@ -73,30 +73,76 @@ console.log(process.env.DATETIME_MINUS_HOURS); // '2024-03-13T23:14:25'
 
 ## Async retry
 ### asyncRetrySimple
-Execute a provided function once per a provided amount of milliseconds until this function will return a truthy value or the amount of provided attempts will be exceeded:
+Execute a provided function once per a provided amount of milliseconds until
+this function will return a truthy value or the amount of provided attempts will
+be exceeded:
 ```
 const { asyncRetrySimple } = require('js-automation-tools');
 
 const myFunction = async function () {
-    return await getSomeData();
+    return getSomeData();
 };
 
-const result = await asyncRetrySimple(myFunction, 5, 2000); // myFunction will be executed up to 5 times every 2 seconds until its result will be truthy
+const result = await asyncRetrySimple(myFunction, 5, 2000, 1); // myFunction will be executed up to 5 times every 2 seconds until its result will be truthy
+console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
+```
+
+**OR** you can specify the arguments inside the object as `key: value` pairs:
+
+```
+const { asyncRetrySimple } = require('js-automation-tools');
+
+const myFunction = async function () {
+    return getSomeData();
+};
+
+const result = await asyncRetrySimple({
+    functionToExecute: myFunction,
+    attempts: 5,
+    waitTime: 2000,
+    logLevel: 1
+}); // myFunction will be executed up to 5 times every 2 seconds until its result will be truthy
 console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
 ```
 ### asyncRetryCustom
-Execute a provided function once per a provided amount of milliseconds until this function will return a value that upon passing a functionCheck check will be true or the amount of provided attempts will be exceeded:
+Execute a provided function once per a provided amount of milliseconds until
+this function will return a value that upon passing a `functionCheck`
+check will be `true` or the amount of provided attempts will be exceeded:
 ```
 const { asyncRetryCustom } = require('js-automation-tools');
 
 const myFunction = async function () {
-    return await getSomeData();
+    const response = await getSomeData();
+    return response.result;
 };
-const checkFunction = async function (result) {
+const checkFunction = function (result) {
     return result.statusCode === 200;
 };
 
-const result = await asyncRetryCustom(myFunction, checkFunction, 10, 3000); // myFunction will be executed up to 10 times every 3 seconds until its result statusCode will be 200
+const result = await asyncRetryCustom(myFunction, checkFunction, 10, 3000, 2); // myFunction will be executed up to 10 times every 3 seconds until its result statusCode will be 200
+console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
+```
+
+**OR** you can specify the arguments inside the object as `key: value` pairs:
+
+```
+const { asyncRetryCustom } = require('js-automation-tools');
+
+const myFunction = async function () {
+    const response = await getSomeData();
+    return response.result;
+};
+const checkFunction = function (result) {
+    return result.statusCode === 200;
+};
+
+const result = await asyncRetryCustom({
+    functionToExecute: myFunction,
+    functionToCheck: checkFunction,
+    attempts: 10,
+    waitTime: 3000,
+    logLevel: 2
+}); // myFunction will be executed up to 10 times every 3 seconds until its result statusCode will be 200
 console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
 ```
 
