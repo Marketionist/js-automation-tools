@@ -5,12 +5,11 @@
 const _attemptsDefault = 10;
 const _waitTimeDefault = 1000;
 const _logLevelDefault = 0;
-const _notificationAttemptNumber = '\n-> Running functionToExecute - attempt:';
-const _notificationFunctionToExecuteResponse = '\n-> Response from functionToExecute:';
+const _notificationAttemptNumber = '\n-> Running %s - attempt: %d';
+const _notificationFunctionToExecuteResponse = '\n-> Response from';
 const _errorSpecifyFunctionToExecute = '\n-> Please specify functionToExecute function';
 const _errorSpecifyFunctionToCheck = '\n-> Please specify functionToCheck function';
-const _errorFailedFunctionToExecute = '\n-> Failed to succeed while running ' +
-    'functionToExecute - provided number of attempts was exceeded';
+const _errorFailedFunctionToExecute = '\n-> Provided number of attempts was exceeded - executed';
 
 /**
  * Executes a provided function once per a provided amount of milliseconds
@@ -42,12 +41,12 @@ async function asyncRetrySimple (
         let iteration = 0;
         const intervalId = setInterval(async () => {
             if (logLevel > 0) {
-                console.info(_notificationAttemptNumber, iteration);
+                console.info(_notificationAttemptNumber, functionToExecute.name, iteration);
             }
             const res = await functionToExecute();
 
             if (logLevel === 2) {
-                console.info(_notificationFunctionToExecuteResponse, res);
+                console.info(`${_notificationFunctionToExecuteResponse} ${functionToExecute.name}:`, res);
             }
 
             if (res) {
@@ -57,7 +56,7 @@ async function asyncRetrySimple (
                 iteration++;
             } else {
                 clearInterval(intervalId);
-                return reject(new Error(_errorFailedFunctionToExecute));
+                return reject(new Error(`${_errorFailedFunctionToExecute} ${functionToExecute.name} x ${attempts}`));
             }
         }, waitTime)
     });
@@ -103,12 +102,12 @@ async function asyncRetryCustom (
         let iteration = 0;
         const intervalId = setInterval(async () => {
             if (logLevel > 0) {
-                console.info(_notificationAttemptNumber, iteration);
+                console.info(_notificationAttemptNumber, functionToExecute.name, iteration);
             }
             const res = await functionToExecute();
 
             if (logLevel === 2) {
-                console.info(_notificationFunctionToExecuteResponse, res);
+                console.info(`${_notificationFunctionToExecuteResponse} ${functionToExecute.name}:`, res);
             }
 
             if (functionToCheck(res)) {
@@ -118,7 +117,7 @@ async function asyncRetryCustom (
                 iteration++;
             } else {
                 clearInterval(intervalId);
-                return reject(new Error(_errorFailedFunctionToExecute));
+                return reject(new Error(`${_errorFailedFunctionToExecute} ${functionToExecute.name} x ${attempts}`));
             }
         }, waitTime)
     });
