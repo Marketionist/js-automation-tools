@@ -80,10 +80,10 @@ be exceeded:
 const { asyncRetrySimple } = require('js-automation-tools');
 
 const myFunction = async function () {
-    return getSomeData();
+    return getSomeData(); // If successful - should return a truthy value
 };
 
-const result = await asyncRetrySimple(myFunction, 5, 2000, 1); // myFunction will be executed up to 5 times every 2 seconds until its result will be truthy
+const result = await asyncRetrySimple(myFunction, 5, 2000, 1); // myFunction will be executed every 2 seconds up to 5 times until its result will be truthy
 console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
 ```
 
@@ -93,7 +93,7 @@ console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
 const { asyncRetrySimple } = require('js-automation-tools');
 
 const myFunction = async function () {
-    return getSomeData();
+    return getSomeData(); // If successful - should return a truthy value
 };
 
 const result = await asyncRetrySimple({
@@ -101,7 +101,7 @@ const result = await asyncRetrySimple({
     attempts: 5,
     waitTime: 2000,
     logLevel: 1
-}); // myFunction will be executed up to 5 times every 2 seconds until its result will be truthy
+}); // myFunction will be executed every 2 seconds up to 5 times until its result will be truthy
 console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
 ```
 ### asyncRetryCustom
@@ -119,7 +119,7 @@ const checkFunction = function (result) {
     return result.statusCode === 200;
 };
 
-const result = await asyncRetryCustom(myFunction, checkFunction, 10, 3000, 2); // myFunction will be executed up to 10 times every 3 seconds until its result statusCode will be 200
+const result = await asyncRetryCustom(myFunction, checkFunction, 10, 3000, 2); // myFunction will be executed every 3 seconds up to 10 times until its result statusCode will be 200
 console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
 ```
 
@@ -142,7 +142,7 @@ const result = await asyncRetryCustom({
     attempts: 10,
     waitTime: 3000,
     logLevel: 2
-}); // myFunction will be executed up to 10 times every 3 seconds until its result statusCode will be 200
+}); // myFunction will be executed every 3 seconds up to 10 times until its result statusCode will be 200
 console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
 ```
 
