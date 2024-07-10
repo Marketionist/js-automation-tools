@@ -5,6 +5,7 @@
 const _attemptsDefault = 10;
 const _waitTimeDefault = 1000;
 const _logLevelDefault = 0;
+const _spacesToIndent = 4;
 const _notificationAttemptNumber = '\n-> Running %s - attempt: %d';
 const _notificationFunctionToExecuteResponse = '\n-> Response from';
 const _errorSpecifyFunctionToExecute = '\n-> Please specify functionToExecute function';
@@ -46,7 +47,10 @@ async function asyncRetrySimple (
             const res = await functionToExecute();
 
             if (logLevel === 2) {
-                console.info(`${_notificationFunctionToExecuteResponse} ${functionToExecute.name}:`, res);
+                console.info(
+                    `${_notificationFunctionToExecuteResponse} ${functionToExecute.name}:`,
+                    JSON.stringify(res, null, _spacesToIndent)
+                );
             }
 
             if (res) {
@@ -107,7 +111,10 @@ async function asyncRetryCustom (
             const res = await functionToExecute();
 
             if (logLevel === 2) {
-                console.info(`${_notificationFunctionToExecuteResponse} ${functionToExecute.name}:`, res);
+                console.info(
+                    `${_notificationFunctionToExecuteResponse} ${functionToExecute.name}:`,
+                    JSON.stringify(res, null, _spacesToIndent)
+                );
             }
 
             if (functionToCheck(res)) {
