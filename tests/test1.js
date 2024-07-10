@@ -96,7 +96,7 @@ if (
     // Enable all logs output
     const logLevel = 2;
     // Generate random digits within a provided interval
-    const generateRandomDigit = async function (min, max) {
+    const _generateRandomDigit = async function (min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     };
     const digitZero = 0;
@@ -106,12 +106,12 @@ if (
 
     // Test asyncRetrySimple
     const myFunctionSimple = async function () {
-        return generateRandomDigit(digitZero, digitTwo);
+        return _generateRandomDigit(digitZero, digitTwo);
     };
     const asyncRetrySimpleResult = await asyncRetrySimple({
         functionToExecute: myFunctionSimple,
         attempts: 5,
-        waitTime: 2000,
+        waitTime: 500,
         logLevel: 2
     });
 
@@ -119,7 +119,7 @@ if (
 
     // Test asyncRetryCustom
     const myFunctionCustom = async function () {
-        return generateRandomDigit(digitZero, digitTen);
+        return _generateRandomDigit(digitZero, digitTen);
     };
     const checkFunction = function (result) {
         return result > digitSeven;
@@ -128,8 +128,8 @@ if (
     const asyncRetryCustomResult = await asyncRetryCustom({
         functionToExecute: myFunctionCustom,
         functionToCheck: checkFunction,
-        attempts: 10,
-        waitTime: 3000,
+        attempts: 20,
+        waitTime: 1000,
         logLevel: 2
     });
 
