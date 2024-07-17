@@ -2,7 +2,7 @@ const path = require('path');
 const {
     stamp,
     dateTime,
-    asyncRetryIfFalse,
+    retryIfFalse,
     createRequest,
     sendRequest,
     readDirectories
@@ -103,18 +103,18 @@ if (
     const digitTen = 10;
     const digitSeven = 7;
 
-    // Test asyncRetryIfFalse with only 2 arguments
+    // Test retryIfFalse with only 2 arguments
     const myFunctionSimple = async function () {
         return _generateRandomDigit(digitZero, digitTwo);
     };
-    const asyncRetryIfFalseSimpleResult = await asyncRetryIfFalse({
+    const retryIfFalseSimpleResult = await retryIfFalse({
         functionToExecute: myFunctionSimple,
         logLevel: logLevel
     });
 
-    console.log(`asyncRetryIfFalseSimpleResult: ${asyncRetryIfFalseSimpleResult}`);
+    console.log(`retryIfFalseSimpleResult: ${retryIfFalseSimpleResult}`);
 
-    // Test asyncRetryIfFalse with all 5 arguments
+    // Test retryIfFalse with all 5 arguments
     const myFunctionCustom = async function () {
         return _generateRandomDigit(digitZero, digitTen);
     };
@@ -122,7 +122,7 @@ if (
         return result > digitSeven;
     };
 
-    const asyncRetryIfFalseResult = await asyncRetryIfFalse({
+    const retryIfFalseResult = await retryIfFalse({
         functionToExecute: myFunctionCustom,
         functionCheck: checkFunction,
         attempts: 20,
@@ -130,7 +130,7 @@ if (
         logLevel: logLevel
     });
 
-    console.log(`asyncRetryIfFalseResult: ${asyncRetryIfFalseResult}`);
+    console.log(`retryIfFalseResult: ${retryIfFalseResult}`);
 
     // Test createRequest
     const responsePost = await createRequest(
