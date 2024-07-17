@@ -16,7 +16,7 @@ const ERROR_FAILED_FUNCTION_TO_EXECUTE = '\n-> Provided number of attempts was e
 
 /* eslint-disable max-len */
 /**
- * Executes a provided function (`functionToExecute`) once per a provided amount
+ * Retries executing a provided function (`functionToExecute`) once per a provided amount
  * of milliseconds (`waitTime`) until this function will return a value that upon passing a
  * (`functionCheck`) check will be `true` or the amount of provided attempts (`attempts`) will be exceeded.
  * @param {Object} configurationObject configuration object with parameters, for example: `{ functionToExecute: myFunction, functionCheck: checkFunction, attempts: 20, waitTime: 5000, logLevel: 2 }`.
@@ -27,7 +27,7 @@ const ERROR_FAILED_FUNCTION_TO_EXECUTE = '\n-> Provided number of attempts was e
  * @param {Number|_logLevelDefault} configurationObject.logLevel must be an integer: 0 or 1 or 2 (default value: `0` - disabled).
  * @returns {Promise} response of a function that was provided for execution.
  */
-async function asyncRetryIfFalse ({
+async function retryIfFalse ({
     functionToExecute: functionToExecute,
     functionCheck: functionCheck,
     attempts: attempts,
@@ -78,4 +78,4 @@ async function asyncRetryIfFalse ({
     return result;
 }
 
-module.exports = asyncRetryIfFalse;
+module.exports = retryIfFalse;
