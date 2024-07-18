@@ -5,23 +5,26 @@
 const http = require('http');
 const https = require('https');
 const url = require('url');
+const _spacesToIndent = 4;
+const _emptyString = '';
+const _logLevelDefault = 0;
 
+/* eslint-disable max-len */
 /**
- * Handles response from request and prints out response status, headers, body
- * @param {Object} response
- * @param {Number} logLevel must be an integer: 0 or 1 or 2
- * @param {Function} callbackFunction
+ * Handles response from request and prints out response status, headers, body.
+ * @param {Object} response response from endpoint.
+ * @param {Number} logLevel must be an integer: 0 or 1 or 2.
+ * @param {Function} callbackFunction function to be called after response was finished and all data from response was accumulated.
  */
 function _handleResponse (response, logLevel, callbackFunction) {
-    const spacesToIndent = 4;
-
+    /* eslint-enable max-len */
     let data = '';
 
     if (logLevel === 1 || logLevel === 2) {
         console.log(`\n-> Response status: ${response.statusCode}`);
 
         if (response.headers && logLevel === 2) {
-            console.log(`\n-> Response headers: ${JSON.stringify(response.headers, null, spacesToIndent)}`);
+            console.log(`\n-> Response headers: ${JSON.stringify(response.headers, null, _spacesToIndent)}`);
         }
     }
 
@@ -38,36 +41,34 @@ function _handleResponse (response, logLevel, callbackFunction) {
             console.log(`\n-> Response body: ${res}`);
         }
         // Resolve after response was finished and all data from response was accumulated
-        callbackFunction(data);
+        callbackFunction({ statusCode: response.statusCode, headers: response.headers, body: data });
     });
 }
 
+/* eslint-disable max-len */
 /**
- * Sends request
- * @param {String} method GET or POST or DELETE or any other
- * @param {String} requestUrl URL to send request to
- * @param {String} headersString string that contains request headers
- * @param {String} bodyString string that contains request body
- * @param {Number} logLevel must be an integer: 0 or 1 or 2, defaults to 0 (no logs)
- * @returns {Promise} response
+ * Sends request to endpoint.
+ * @param {Object} configurationObject configuration object with parameters, for example: `{ method: 'POST', requestUrl: 'http://httpbin.org/post', headersString: '{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }', bodyString: '{ "test1": 1, "test2": 2 }', logLevel: 1 }`.
+ * @param {String} configurationObject.method string with method `'GET'` or `'POST'` or `'DELETE'` or any other.
+ * @param {String} configurationObject.requestUrl string with URL of endpoint to send request to (for example: `'https://www.google.com/'`).
+ * @param {String|_emptyString} configurationObject.headersString string that contains request headers (for example: `'{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }'`).
+ * @param {String|_emptyString} configurationObject.bodyString string that contains request body (for example: `'{ "test1": 1, "test2": 2 }'`).
+ * @param {Number|_logLevelDefault} configurationObject.logLevel number (for example: `0` or `1` or `2`, default value: `0` - no logs).
+ * @returns {Promise} response from endpoint. Resolves into an object with `statusCode`, `headers`, `body`.
  */
-function sendRequest (
-    method = '',
-    requestUrl = '',
-    headersString = '',
-    bodyString = '',
-    logLevel = 0
-) {
-    if (typeof arguments[0] === 'object') {
-        /* eslint-disable no-param-reassign */
-        method = arguments[0].method || '';
-        requestUrl = arguments[0].requestUrl || '';
-        headersString = arguments[0].headersString || '';
-        bodyString = arguments[0].bodyString || '';
-        logLevel = arguments[0].logLevel || 0;
-        /* eslint-enable no-param-reassign */
-    }
-
+function sendRequest ({
+    method: method,
+    requestUrl: requestUrl,
+    headersString: headersString,
+    bodyString: bodyString,
+    logLevel: logLevel
+}) {
+    /* eslint-enable max-len */
+    /* eslint-disable no-param-reassign */
+    headersString = arguments[0].headersString || _emptyString;
+    bodyString = arguments[0].bodyString || _emptyString;
+    logLevel = arguments[0].logLevel || _logLevelDefault;
+    /* eslint-enable no-param-reassign */
     if (method.length === 0) {
         console.log('\n-> Problem with request method - please specify it ' +
             'as a string (for example: \'GET\' or \'POST\' or \'DELETE\' or ' +
