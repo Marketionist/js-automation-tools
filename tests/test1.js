@@ -3,7 +3,6 @@ const {
     stamp,
     dateTime,
     retryIfFalse,
-    createRequest,
     sendRequest,
     readDirectories
 } = require('../index.js');
@@ -94,6 +93,28 @@ if (
 (async () => {
     // Enable all logs output
     const logLevel = 2;
+    // Test sendRequest
+    const responsePost = await sendRequest({
+        method: 'POST',
+        requestUrl: 'http://httpbin.org/post',
+        headersString: '{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }',
+        bodyString: '{ "test1": 1, "test2": 2 }',
+        logLevel: logLevel
+    });
+
+    console.log('responsePost from sendRequest:', responsePost);
+
+    // Test sendRequest with mixed arguments
+    const responsePostMixed = await sendRequest({
+        requestUrl: 'http://a:b@httpbin.org/post?query=string',
+        method: 'POST',
+        headersString: '{ "Content-Type": "application/json", "Authorization": "Bearer EfGh5678" }',
+        logLevel: logLevel,
+        bodyString: '{ "test3": 3, "test4": 4 }'
+    });
+
+    console.log('responsePost from sendRequest with mixed arguments:', responsePostMixed);
+
     // Generate random digits within a provided interval
     const _generateRandomDigit = async function (min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -131,28 +152,6 @@ if (
     });
 
     console.log(`retryIfFalseResult: ${retryIfFalseResult}`);
-
-    // Test createRequest
-    const responsePost = await createRequest(
-        'POST',
-        'http://httpbin.org/post',
-        '{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }',
-        '{ "test1": 1, "test2": 2 }',
-        logLevel
-    );
-
-    console.log(`responsePost from createRequest: ${responsePost}`);
-
-    // Test sendRequest
-    const responsePost2 = await sendRequest({
-        requestUrl: 'http://a:b@httpbin.org/post?query=string',
-        method: 'POST',
-        headersString: '{ "Content-Type": "application/json", "Authorization": "Bearer EfGh5678" }',
-        logLevel: logLevel,
-        bodyString: '{ "test3": 3, "test4": 4 }'
-    });
-
-    console.log(`responsePost from sendRequest: ${responsePost2}`);
 
     // Test readDirectories
     const pathToDirectory1 = path.join(__dirname, '..', 'utils');

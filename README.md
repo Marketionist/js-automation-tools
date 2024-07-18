@@ -15,8 +15,8 @@ A collection of scripts for JavaScript test automation
 * [Installation](#installation)
 * [Generate timestamp or random digits](#generate-timestamp-or-random-digits)
 * [Generate current date and time](#generate-current-date-and-time)
-* [Async retry](#async-retry)
-* [Send GET, POST and other requests](#send-get-post-and-other-requests)
+* [Send GET, POST or any other requests](#send-get-post-or-any-other-requests)
+* [Retry executing function](#retry-executing-function)
 * [Read directories](#read-directories)
 * [Contributing](#contributing)
 * [Thanks](#thanks)
@@ -49,7 +49,8 @@ console.log(process.env.TIMESTAMP); // '1588558255810'
 ```
 
 ## Generate current date and time
-Sometimes you need to generate current date and time. It can easily be done like this:
+Sometimes you need to generate current date and time. It can easily be done like
+this:
 ```
 const { dateTime } = require('js-automation-tools');
 
@@ -61,7 +62,10 @@ const currentDateTimePlusSecond = dateTime.generateDateTimePlusSeconds(1); // '2
 const currentDateTimeMinusHour = dateTime.generateDateTimeMinusHours(1); // '2024-03-13T23:14:25'
 ```
 It will also write generated digits to a global environment variable
-`process.env.DATETIME` and `process.env.DATETIME_PLUS_HOURS`, `process.env.DATETIME_PLUS_MINUTES`, `process.env.DATETIME_PLUS_SECONDS`,`process.env.DATETIME_MINUS_HOURS` that can be easily accessed in any place of your tests:
+`process.env.DATETIME` and `process.env.DATETIME_PLUS_HOURS`,
+`process.env.DATETIME_PLUS_MINUTES`, `process.env.DATETIME_PLUS_SECONDS`,
+`process.env.DATETIME_MINUS_HOURS` that can be easily accessed in any place of
+your tests:
 ```
 console.log(process.env.DATETIME); // '2024-03-14T00:14:25'
 console.log(process.env.DATETIME_PLUS_HOURS); // '2024-03-14T01:14:25'
@@ -71,114 +75,17 @@ console.log(process.env.DATETIME_PLUS_SECONDS); // '2024-03-14T00:14:26'
 console.log(process.env.DATETIME_MINUS_HOURS); // '2024-03-13T23:14:25'
 ```
 
-## Async retry
-### asyncRetrySimple
-Execute a provided function once per a provided amount of milliseconds until
-this function will return a truthy value or the amount of provided attempts will
-be exceeded:
-```
-const { asyncRetrySimple } = require('js-automation-tools');
+## Send GET, POST or any other requests
+Send request to any URL and get response - `sendRequest` function accepts 
+configuration object with 5 arguments:
+1. `method` - string (for example: `'GET'` or `'POST'` or `'DELETE'` or any other).
+2. `requestUrl` - string with URL of endpoint to send request to (for example: `'https://www.google.com/'`).
+3. `headersString` - string that contains request headers (for example: `'{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }'`).
+4. `bodyString` - string that contains request body (for example: `'{ "test1": 1, "test2": 2 }'`).
+5. `logLevel` - number (for example: `0` or `1` or `2`, default value: `0` - no logs).
 
-const myFunction = async function () {
-    return getSomeData(); // If successful - should return a truthy value
-};
-
-const result = await asyncRetrySimple(myFunction, 5, 2000, 1); // myFunction will be executed every 2 seconds up to 5 times until its result will be truthy
-console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
-```
-
-**OR** you can specify the arguments inside the object as `key: value` pairs:
-
-```
-const { asyncRetrySimple } = require('js-automation-tools');
-
-const myFunction = async function () {
-    return getSomeData(); // If successful - should return a truthy value
-};
-
-const result = await asyncRetrySimple({
-    functionToExecute: myFunction,
-    attempts: 5,
-    waitTime: 2000,
-    logLevel: 1
-}); // myFunction will be executed every 2 seconds up to 5 times until its result will be truthy
-console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
-```
-### asyncRetryCustom
-Execute a provided function once per a provided amount of milliseconds until
-this function will return a value that upon passing a `functionCheck`
-check will be `true` or the amount of provided attempts will be exceeded:
-```
-const { asyncRetryCustom } = require('js-automation-tools');
-
-const myFunction = async function () {
-    const response = await getSomeData();
-    return response.result;
-};
-const checkFunction = function (result) {
-    return result.statusCode === 200;
-};
-
-const result = await asyncRetryCustom(myFunction, checkFunction, 10, 3000, 2); // myFunction will be executed every 3 seconds up to 10 times until its result statusCode will be 200
-console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
-```
-
-**OR** you can specify the arguments inside the object as `key: value` pairs:
-
-```
-const { asyncRetryCustom } = require('js-automation-tools');
-
-const myFunction = async function () {
-    const response = await getSomeData();
-    return response.result;
-};
-const checkFunction = function (result) {
-    return result.statusCode === 200;
-};
-
-const result = await asyncRetryCustom({
-    functionToExecute: myFunction,
-    functionToCheck: checkFunction,
-    attempts: 10,
-    waitTime: 3000,
-    logLevel: 2
-}); // myFunction will be executed every 3 seconds up to 10 times until its result statusCode will be 200
-console.log(`result: ${result}`); // { data: 'Some data', statusCode: 200 }
-```
-
-## Send GET, POST and other requests
-Send request to any URL and get response - `sendRequest` function accepts 5
-arguments:
-1. Method - string (for example: `'GET'` or `'POST'` or `'DELETE'` or any other).
-2. Request URL - string (for example: `'https://www.google.com/'`).
-3. Headers - string (for example: `'{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }'`).
-4. Body - string (for example: `'{ "test1": 1, "test2": 2 }'`).
-5. Log level - number (for example: `0` or `1` or `2`).
-
-Or just call `sendRequest` function with empty string (`''`) instead of any
-argument if it's not needed in your request:
-```
-const { sendRequest } = require('js-automation-tools');
-
-const responseGet = await sendRequest(
-    'GET',
-    'https://www.google.com/',
-    '',
-    '',
-    2
-);
-
-const responsePost = await sendRequest(
-    'POST',
-    'http://httpbin.org/post',
-    '{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }',
-    '{ "test1": 1, "test2": 2 }',
-    1
-);
-```
-
-**OR** you can specify the arguments inside the object as `key: value` pairs:
-
+Also you just call `sendRequest` function without any of the arguments if it's
+not needed - for example in GET request:
 ```
 const { sendRequest } = require('js-automation-tools');
 
@@ -188,26 +95,6 @@ const responseGet = await sendRequest({
 });
 
 const responsePost = await sendRequest({
-    method: 'POST',
-    requestUrl: 'http://httpbin.org/post',
-    headersString: '{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }',
-    bodyString: '{ "test1": 1, "test2": 2 }',
-    logLevel: 1
-});
-```
-
-> Note: you can also use `createRequest` function - it is an alias and works
-> exactly the same as `sendRequest`, for example:
-
-```
-const { createRequest } = require('js-automation-tools');
-
-const responseGet = await createRequest({
-    method: 'GET',
-    requestUrl: 'https://www.google.com/'
-});
-
-const responsePost = await createRequest({
     method: 'POST',
     requestUrl: 'http://httpbin.org/post',
     headersString: '{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }',
@@ -226,6 +113,77 @@ to one of 3 levels:
   * Response status code
   * Response headers
   * Response body
+
+## Retry executing function
+Retry executing a provided function once per a provided amount of milliseconds
+until this function will return a value that upon passing a `functionCheck`
+check will be `true` or the amount of provided attempts will be exceeded -
+`retryIfFalse` function accepts configuration object with 5 arguments:
+1. `functionToExecute` - function to execute. For example an API request:
+    ```
+    async function () {
+        const response = await sendRequest({ method: 'GET', requestUrl: 'https://www.google.com/' });
+        return response.body;
+    }
+    ```
+2. `functionCheck` - function to execute to check the result of
+    `functionToExecute` (if successful - should return `true`, for example:
+    `(responseBody) => responseBody.length > 0`).
+3. `attempts` - number of attempts to retry (default value: `10`).
+4. `waitTime` - time to wait between retries (in milliseconds, default value: `1000`).
+5. `logLevel` - number (for example: `0` or `1` or `2`, default value: `0` - no logs).
+
+> Note: you have to specify the `retryIfFalse` arguments inside the
+> configuration object as `key: value` pairs:
+```
+const { retryIfFalse, sendRequest } = require('js-automation-tools');
+
+const myFunction = async function () {
+    const response = await sendRequest({ method: 'GET', requestUrl: 'https://www.google.com/' });
+    return response;
+};
+
+const result = await retryIfFalse({
+    functionToExecute: myFunction,
+    attempts: 10,
+    waitTime: 3000,
+    logLevel: 2
+}); // myFunction will be executed every 3 seconds up to 10 times until its result will be truthy
+console.log('result:', result); // result: { statusCode: 200, headers: { 'content-type': 'application/json' }, body: 'Some data' }
+```
+
+**OR** if you want to provide a custom `functionCheck` function to check that
+the result of `functionToExecute` (or any of its properties) is truthy:
+
+```
+const { retryIfFalse, sendRequest } = require('js-automation-tools');
+
+const myFunction = async function () {
+    const response = await sendRequest({ method: 'GET', requestUrl: 'https://www.google.com/' });
+    return response;
+};
+const checkFunction = function (result) {
+    return result.statusCode === 200;
+};
+
+const result = await retryIfFalse({
+    functionToExecute: myFunction,
+    functionCheck: checkFunction,
+    attempts: 20,
+    waitTime: 5000,
+    logLevel: 2
+}); // myFunction will be executed every 5 seconds up to 20 times until its result statusCode will be 200
+console.log('result:', result); // result: { statusCode: 200, headers: { 'content-type': 'application/json' }, body: 'Some data' }
+```
+
+By default logs are disabled (`logLevel` set to `0`). You can set logging output
+to one of 3 levels:
+- `0` - logs disabled (by default)
+- `1` - partial logs are enabled - prints out:
+  * Each attempt number
+- `2` - full logs are enabled - prints out:
+  * Each attempt number
+  * Response from `functionToExecute` after each attempt
 
 ## Read directories
 Read the array of directories and get the array of files from this directories:
