@@ -84,8 +84,9 @@ configuration object with 5 arguments:
 4. `bodyString` - string that contains request body (for example: `'{ "test1": 1, "test2": 2 }'`).
 5. `logLevel` - number (for example: `0` or `1` or `2`, default value: `0` - no logs).
 
-Also you just call `sendRequest` function without any of the arguments if it's
-not needed - for example in GET request:
+Also you can just call `sendRequest` function without `headersString`,
+`bodyString`, `logLevel` arguments if they are not needed - for example in GET
+request:
 ```
 const { sendRequest } = require('js-automation-tools');
 
