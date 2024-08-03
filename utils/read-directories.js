@@ -10,10 +10,10 @@ const readdirP = promisify(readdir);
 const statP = promisify(stat);
 
 /**
- * Asynchronously reads directory and returns the array of its files
- * @param {string} directory
- * @param {array} allFiles
- * @returns {array} allFiles
+ * Asynchronously reads directory and returns the array of its files.
+ * @param {String} directory path to directory.
+ * @param {Array} allFiles array with file paths.
+ * @returns {Array} array with file paths.
  */
 async function readDirectory (directory, allFiles = []) {
     const files = (await readdirP(directory)).map((file) => {
@@ -31,9 +31,9 @@ async function readDirectory (directory, allFiles = []) {
 }
 
 /**
- * Asynchronously reads directories and returns the array of their files
- * @param {array} directories
- * @returns {array} allFilesFinal
+ * Asynchronously reads directories and returns the array of their files.
+ * @param {Array} directories array with directories to read through.
+ * @returns {Array} array with file paths.
  */
 async function readDirectories (directories) {
     const allFilesFinal = [];

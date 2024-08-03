@@ -4,6 +4,10 @@
 
 let stamp = {
     _timestamp: '',
+    /**
+     * Resets timestamp to a fresh new value.
+     * @returns {String} timestamp string.
+     */
     resetTimestamp: function () {
         if (this._timestamp.length > 0) {
             // If timestamp already exists, increment it by 1
@@ -17,6 +21,10 @@ let stamp = {
 
         return process.env.TIMESTAMP;
     },
+    /**
+     * Creates timestamp or resets it if it already exists.
+     * @returns {String} timestamp string.
+     */
     getTimestamp: function () {
         process.env.TIMESTAMP = this._timestamp.length > 0 ?
             this._timestamp :
