@@ -2,11 +2,12 @@
 
 // #############################################################################
 
-let dateTime = {
-    _minutesInHour: 60,
-    _secondsInMinute: 60,
-    _millisecondsInSecond: 1000,
+let _hoursInDay = 24;
+let _minutesInHour = 60;
+let _secondsInMinute = 60;
+let _millisecondsInSecond = 1000;
 
+let dateTime = {
     /**
      * Generates current date and time (for example: '2024-03-14T00:14:25').
      * @returns {String} string with date and time (for example: '2024-03-14T00:14:25').
@@ -20,6 +21,25 @@ let dateTime = {
     },
     // ==== Plus functions =====================================================
     /**
+     * Generates current date and time plus number of days (for example: '2024-03-15T00:14:25').
+     * @param {Number} days number of days that will be added to current date and time.
+     * @returns {String} string with date and time plus number of days (for example: '2024-03-15T00:14:25').
+     */
+    generateDateTimePlusDays: function (days) {
+        process.env.DATETIME_PLUS_DAYS = new Date(
+            new Date(Date.now() + days *
+                (
+                    _hoursInDay *
+                    _minutesInHour *
+                    _secondsInMinute *
+                    _millisecondsInSecond
+                )
+            ).toString().split('GMT')[0] + ' UTC'
+        ).toISOString().split('.')[0];
+
+        return process.env.DATETIME_PLUS_DAYS;
+    },
+    /**
      * Generates current date and time plus number of hours (for example: '2024-03-14T01:14:25').
      * @param {Number} hours number of hours that will be added to current date and time.
      * @returns {String} string with date and time plus number of hours (for example: '2024-03-14T01:14:25').
@@ -28,9 +48,9 @@ let dateTime = {
         process.env.DATETIME_PLUS_HOURS = new Date(
             new Date(Date.now() + hours *
                 (
-                    dateTime._minutesInHour *
-                    dateTime._secondsInMinute *
-                    dateTime._millisecondsInSecond
+                    _minutesInHour *
+                    _secondsInMinute *
+                    _millisecondsInSecond
                 )
             ).toString().split('GMT')[0] + ' UTC'
         ).toISOString().split('.')[0];
@@ -47,8 +67,8 @@ let dateTime = {
             new Date(Date.now() +
                 (
                     minutes *
-                    dateTime._secondsInMinute *
-                    dateTime._millisecondsInSecond
+                    _secondsInMinute *
+                    _millisecondsInSecond
                 )
             ).toString().split('GMT')[0] + ' UTC'
         ).toISOString().split('.')[0];
@@ -63,7 +83,7 @@ let dateTime = {
     generateDateTimePlusSeconds: function (seconds) {
         process.env.DATETIME_PLUS_SECONDS = new Date(
             new Date(
-                Date.now() + (seconds * dateTime._millisecondsInSecond)
+                Date.now() + (seconds * _millisecondsInSecond)
             ).toString().split('GMT')[0] + ' UTC'
         ).toISOString().split('.')[0];
 
@@ -79,9 +99,9 @@ let dateTime = {
         process.env.DATETIME_MINUS_HOURS = new Date(
             new Date(Date.now() - hours *
                 (
-                    dateTime._minutesInHour *
-                    dateTime._secondsInMinute *
-                    dateTime._millisecondsInSecond
+                    _minutesInHour *
+                    _secondsInMinute *
+                    _millisecondsInSecond
                 )
             ).toString().split('GMT')[0] + ' UTC'
         ).toISOString().split('.')[0];
