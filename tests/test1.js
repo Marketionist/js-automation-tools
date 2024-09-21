@@ -40,6 +40,14 @@ console.log(
     `${currentDateTime === process.env.DATETIME} ${process.env.DATETIME}`
 );
 
+const currentDateTimePlusDay = dateTime.generateDateTimePlusDays(1);
+
+console.log(
+    'process.env.DATETIME_PLUS_DAYS: ' +
+    `${currentDateTimePlusDay === process.env.DATETIME_PLUS_DAYS} ` +
+    process.env.DATETIME_PLUS_DAYS
+);
+
 const currentDateTimePlusHour = dateTime.generateDateTimePlusHours(1);
 
 console.log(
@@ -65,13 +73,14 @@ console.log(
 );
 
 if (
-    (Date.parse(currentDateTimePlusHour) > Date.parse(currentDateTimePlusMinute)) &&
+    (Date.parse(currentDateTimePlusDay) > Date.parse(currentDateTimePlusHour)) &&
+        (Date.parse(currentDateTimePlusHour) > Date.parse(currentDateTimePlusMinute)) &&
         (Date.parse(currentDateTimePlusMinute) > Date.parse(currentDateTimePlusSecond)) &&
-            (Date.parse(currentDateTimePlusSecond) > Date.parse(currentDateTime))
+        (Date.parse(currentDateTimePlusSecond) > Date.parse(currentDateTime))
 ) {
     console.log('dateTime plus looks ok!');
 } else {
-    throw new Error('currentDateTimePlus Hour/Minute/Second should be more than currentDateTime');
+    throw new Error('currentDateTimePlus Day/Hour/Minute/Second should be more than currentDateTime');
 }
 
 const currentDateTimeMinusHour = dateTime.generateDateTimeMinusHours(1);

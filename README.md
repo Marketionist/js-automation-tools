@@ -55,6 +55,7 @@ this:
 const { dateTime } = require('js-automation-tools');
 
 const currentDateTime = dateTime.generateDateTime(); // '2024-03-14T00:14:25'
+const currentDateTimePlusDay = dateTime.generateDateTimePlusDays(1); // '2024-03-15T01:14:25'
 const currentDateTimePlusHour = dateTime.generateDateTimePlusHours(1); // '2024-03-14T01:14:25'
 const currentDateTimePlusMinute = dateTime.generateDateTimePlusMinutes(1); // '2024-03-14T00:15:25'
 const currentDateTimePlusSecond = dateTime.generateDateTimePlusSeconds(1); // '2024-03-14T00:14:26'
@@ -62,12 +63,13 @@ const currentDateTimePlusSecond = dateTime.generateDateTimePlusSeconds(1); // '2
 const currentDateTimeMinusHour = dateTime.generateDateTimeMinusHours(1); // '2024-03-13T23:14:25'
 ```
 It will also write generated digits to a global environment variable
-`process.env.DATETIME` and `process.env.DATETIME_PLUS_HOURS`,
-`process.env.DATETIME_PLUS_MINUTES`, `process.env.DATETIME_PLUS_SECONDS`,
-`process.env.DATETIME_MINUS_HOURS` that can be easily accessed in any place of
-your tests:
+`process.env.DATETIME` and `process.env.DATETIME_PLUS_DAYS`,
+`process.env.DATETIME_PLUS_HOURS`, `process.env.DATETIME_PLUS_MINUTES`,
+`process.env.DATETIME_PLUS_SECONDS`, `process.env.DATETIME_MINUS_HOURS` that can
+be easily accessed in any place of your tests:
 ```
 console.log(process.env.DATETIME); // '2024-03-14T00:14:25'
+console.log(process.env.DATETIME_PLUS_DAYS); // '2024-03-15T00:14:25'
 console.log(process.env.DATETIME_PLUS_HOURS); // '2024-03-14T01:14:25'
 console.log(process.env.DATETIME_PLUS_MINUTES); // '2024-03-14T00:15:25'
 console.log(process.env.DATETIME_PLUS_SECONDS); // '2024-03-14T00:14:26'
