@@ -20,14 +20,19 @@ let dateTime = {
         return process.env.DATETIME;
     },
     // ==== Plus functions =====================================================
+    /* eslint-disable max-len */
     /**
-     * Generates current date and time plus number of days (for example: '2024-03-15T00:14:25').
-     * @param {Number} days number of days that will be added to current date and time.
+     * Generates current (if no initial date is provided) date and time plus number of days (for example: '2024-03-15T00:14:25').
+     * @param {Number} days number of days that will be added to current (if no initial date is provided) date and time.
+     * @param {String=} initialDate string with initial date and time that you want to add a number of days to (for example: '2024-03-14T00:14:25').
      * @returns {String} string with date and time plus number of days (for example: '2024-03-15T00:14:25').
      */
-    generateDateTimePlusDays: function (days) {
+    generateDateTimePlusDays: function (days, initialDate) {
+        /* eslint-enable max-len */
+        const date = initialDate ? initialDate : Date.now();
+
         process.env.DATETIME_PLUS_DAYS = new Date(
-            new Date(Date.now() + days *
+            new Date(new Date(date).getTime() + days *
                 (
                     _hoursInDay *
                     _minutesInHour *

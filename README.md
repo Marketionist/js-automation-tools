@@ -62,20 +62,18 @@ const currentDateTimePlusSecond = dateTime.generateDateTimePlusSeconds(1); // '2
 
 const currentDateTimeMinusHour = dateTime.generateDateTimeMinusHours(1); // '2024-03-13T23:14:25'
 ```
-It will also write generated digits to a global environment variable
+Also you can call these functions with an optional second argument - an initial
+date to add days/hours/minutes/seconds to that date:
+```
+const { dateTime } = require('js-automation-tools');
+
+const pastDateTimePlusDay = dateTime.generateDateTimePlusDays(1, '2024-03-14T00:14:25'); // '2024-03-15T00:14:25'
+```
+It will also write generated date and time to a global environment variable
 `process.env.DATETIME` and `process.env.DATETIME_PLUS_DAYS`,
 `process.env.DATETIME_PLUS_HOURS`, `process.env.DATETIME_PLUS_MINUTES`,
 `process.env.DATETIME_PLUS_SECONDS`, `process.env.DATETIME_MINUS_HOURS` that can
-be easily accessed in any place of your tests:
-```
-console.log(process.env.DATETIME); // '2024-03-14T00:14:25'
-console.log(process.env.DATETIME_PLUS_DAYS); // '2024-03-15T00:14:25'
-console.log(process.env.DATETIME_PLUS_HOURS); // '2024-03-14T01:14:25'
-console.log(process.env.DATETIME_PLUS_MINUTES); // '2024-03-14T00:15:25'
-console.log(process.env.DATETIME_PLUS_SECONDS); // '2024-03-14T00:14:26'
-
-console.log(process.env.DATETIME_MINUS_HOURS); // '2024-03-13T23:14:25'
-```
+be easily accessed in any place of your tests.
 
 ## Send GET, POST or any other requests
 Send request to any URL and get response - `sendRequest` function accepts 
