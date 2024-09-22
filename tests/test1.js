@@ -43,8 +43,16 @@ console.log(
 const currentDateTimePlusDay = dateTime.generateDateTimePlusDays(1);
 
 console.log(
-    'process.env.DATETIME_PLUS_DAYS: ' +
+    'currentDateTimePlusDay in process.env.DATETIME_PLUS_DAYS: ' +
     `${currentDateTimePlusDay === process.env.DATETIME_PLUS_DAYS} ` +
+    process.env.DATETIME_PLUS_DAYS
+);
+
+const pastDateTimePlusDay = dateTime.generateDateTimePlusDays(1, '2024-03-14T00:14:25');
+
+console.log(
+    'pastDateTimePlusDay in process.env.DATETIME_PLUS_DAYS: ' +
+    `${pastDateTimePlusDay === process.env.DATETIME_PLUS_DAYS} ` +
     process.env.DATETIME_PLUS_DAYS
 );
 
@@ -78,9 +86,17 @@ if (
         (Date.parse(currentDateTimePlusMinute) > Date.parse(currentDateTimePlusSecond)) &&
         (Date.parse(currentDateTimePlusSecond) > Date.parse(currentDateTime))
 ) {
-    console.log('dateTime plus looks ok!');
+    console.log('currentDateTimePlus Day/Hour/Minute/Second looks ok!');
 } else {
     throw new Error('currentDateTimePlus Day/Hour/Minute/Second should be more than currentDateTime');
+}
+
+if (
+    (Date.parse(currentDateTime) > Date.parse(pastDateTimePlusDay))
+) {
+    console.log('pastDateTimePlus Day/Hour/Minute/Second looks ok!');
+} else {
+    throw new Error('pastDateTimePlus Day/Hour/Minute/Second should be less than currentDateTime');
 }
 
 const currentDateTimeMinusHour = dateTime.generateDateTimeMinusHours(1);
