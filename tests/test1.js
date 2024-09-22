@@ -92,7 +92,7 @@ if (
 }
 
 if (
-    (Date.parse(currentDateTime) > Date.parse(pastDateTimePlusDay))
+    Date.parse(currentDateTime) > Date.parse(pastDateTimePlusDay)
 ) {
     console.log('pastDateTimePlus Day/Hour/Minute/Second looks ok!');
 } else {
