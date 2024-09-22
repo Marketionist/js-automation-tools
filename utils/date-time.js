@@ -44,14 +44,19 @@ let dateTime = {
 
         return process.env.DATETIME_PLUS_DAYS;
     },
+    /* eslint-disable max-len */
     /**
-     * Generates current date and time plus number of hours (for example: '2024-03-14T01:14:25').
-     * @param {Number} hours number of hours that will be added to current date and time.
+     * Generates current (if no initial date is provided) date and time plus number of hours (for example: '2024-03-14T01:14:25').
+     * @param {Number} hours number of hours that will be added to current (if no initial date is provided) date and time.
+     * @param {String=} initialDate string with initial date and time that you want to add a number of hours to (for example: '2024-03-14T00:14:25').
      * @returns {String} string with date and time plus number of hours (for example: '2024-03-14T01:14:25').
      */
-    generateDateTimePlusHours: function (hours) {
+    generateDateTimePlusHours: function (hours, initialDate) {
+        /* eslint-enable max-len */
+        const date = initialDate ? initialDate : Date.now();
+
         process.env.DATETIME_PLUS_HOURS = new Date(
-            new Date(Date.now() + hours *
+            new Date(new Date(date).getTime() + hours *
                 (
                     _minutesInHour *
                     _secondsInMinute *
