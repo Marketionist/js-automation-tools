@@ -67,16 +67,20 @@ let dateTime = {
 
         return process.env.DATETIME_PLUS_HOURS;
     },
+    /* eslint-disable max-len */
     /**
-     * Generates current date and time plus number of minutes (for example: '2024-03-14T00:15:25').
-     * @param {Number} minutes number of minutes that will be added to current date and time.
+     * Generates current (if no initial date is provided) date and time plus number of minutes (for example: '2024-03-14T00:15:25').
+     * @param {Number} minutes number of minutes that will be added to current (if no initial date is provided) date and time.
+     * @param {String=} initialDate string with initial date and time that you want to add a number of minutes to (for example: '2024-03-14T00:14:25').
      * @returns {String} string with date and time plus number of minutes (for example: '2024-03-14T00:15:25').
      */
-    generateDateTimePlusMinutes: function (minutes) {
+    generateDateTimePlusMinutes: function (minutes, initialDate) {
+        /* eslint-enable max-len */
+        const date = initialDate ? initialDate : Date.now();
+
         process.env.DATETIME_PLUS_MINUTES = new Date(
-            new Date(Date.now() +
+            new Date(new Date(date).getTime() + minutes *
                 (
-                    minutes *
                     _secondsInMinute *
                     _millisecondsInSecond
                 )
