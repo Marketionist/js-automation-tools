@@ -91,8 +91,16 @@ console.log(
 const currentDateTimePlusSecond = dateTime.generateDateTimePlusSeconds(1);
 
 console.log(
-    'process.env.DATETIME_PLUS_SECONDS: ' +
+    'currentDateTimePlusSecond in process.env.DATETIME_PLUS_SECONDS: ' +
     `${currentDateTimePlusSecond === process.env.DATETIME_PLUS_SECONDS} ` +
+    process.env.DATETIME_PLUS_SECONDS
+);
+
+const pastDateTimePlusSecond = dateTime.generateDateTimePlusSeconds(1, '2024-03-14T00:14:25');
+
+console.log(
+    'pastDateTimePlusSecond in process.env.DATETIME_PLUS_SECONDS: ' +
+    `${pastDateTimePlusSecond === process.env.DATETIME_PLUS_SECONDS} ` +
     process.env.DATETIME_PLUS_SECONDS
 );
 
@@ -110,7 +118,8 @@ if (
 if (
     (Date.parse(currentDateTime) > Date.parse(pastDateTimePlusDay)) &&
         (Date.parse(pastDateTimePlusDay) > Date.parse(pastDateTimePlusHour)) &&
-        (Date.parse(pastDateTimePlusHour) > Date.parse(pastDateTimePlusMinute))
+        (Date.parse(pastDateTimePlusHour) > Date.parse(pastDateTimePlusMinute)) &&
+        (Date.parse(pastDateTimePlusMinute) > Date.parse(pastDateTimePlusSecond))
 ) {
     console.log('pastDateTimePlus Day/Hour/Minute/Second looks ok!');
 } else {
@@ -128,7 +137,7 @@ console.log(
 if (
     Date.parse(currentDateTimeMinusHour) < Date.parse(currentDateTime)
 ) {
-    console.log('dateTime minus looks ok!');
+    console.log('currentDateTimeMinus Hour looks ok!');
 } else {
     throw new Error('currentDateTimeMinus Hour should be less than currentDateTime');
 }
