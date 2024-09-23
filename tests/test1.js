@@ -59,7 +59,7 @@ console.log(
 const currentDateTimePlusHour = dateTime.generateDateTimePlusHours(1);
 
 console.log(
-    'process.env.DATETIME_PLUS_HOURS: ' +
+    'currentDateTimePlusHour in process.env.DATETIME_PLUS_HOURS: ' +
     `${currentDateTimePlusHour === process.env.DATETIME_PLUS_HOURS} ` +
     process.env.DATETIME_PLUS_HOURS
 );
@@ -75,8 +75,16 @@ console.log(
 const currentDateTimePlusMinute = dateTime.generateDateTimePlusMinutes(1);
 
 console.log(
-    'process.env.DATETIME_PLUS_MINUTES: ' +
+    'currentDateTimePlusMinute in process.env.DATETIME_PLUS_MINUTES: ' +
     `${currentDateTimePlusMinute === process.env.DATETIME_PLUS_MINUTES} ` +
+    process.env.DATETIME_PLUS_MINUTES
+);
+
+const pastDateTimePlusMinute = dateTime.generateDateTimePlusMinutes(1, '2024-03-14T00:14:25');
+
+console.log(
+    'pastDateTimePlusMinute in process.env.DATETIME_PLUS_MINUTES: ' +
+    `${pastDateTimePlusMinute === process.env.DATETIME_PLUS_MINUTES} ` +
     process.env.DATETIME_PLUS_MINUTES
 );
 
@@ -101,7 +109,8 @@ if (
 
 if (
     (Date.parse(currentDateTime) > Date.parse(pastDateTimePlusDay)) &&
-        (Date.parse(pastDateTimePlusDay) > Date.parse(pastDateTimePlusHour))
+        (Date.parse(pastDateTimePlusDay) > Date.parse(pastDateTimePlusHour)) &&
+        (Date.parse(pastDateTimePlusHour) > Date.parse(pastDateTimePlusMinute))
 ) {
     console.log('pastDateTimePlus Day/Hour/Minute/Second looks ok!');
 } else {
