@@ -89,15 +89,20 @@ let dateTime = {
 
         return process.env.DATETIME_PLUS_MINUTES;
     },
+    /* eslint-disable max-len */
     /**
-     * Generates current date and time plus number of seconds (for example: '2024-03-14T00:14:26').
-     * @param {Number} seconds number of seconds that will be added to current date and time.
+     * Generates current (if no initial date is provided) date and time plus number of seconds (for example: '2024-03-14T00:14:26').
+     * @param {Number} seconds number of seconds that will be added to current (if no initial date is provided) date and time.
+     * @param {String=} initialDate string with initial date and time that you want to add a number of seconds to (for example: '2024-03-14T00:14:25').
      * @returns {String} string with date and time plus number of seconds (for example: '2024-03-14T00:14:26').
      */
-    generateDateTimePlusSeconds: function (seconds) {
+    generateDateTimePlusSeconds: function (seconds, initialDate) {
+        /* eslint-enable max-len */
+        const date = initialDate ? initialDate : Date.now();
+
         process.env.DATETIME_PLUS_SECONDS = new Date(
             new Date(
-                Date.now() + (seconds * _millisecondsInSecond)
+                new Date(date).getTime() + (seconds * _millisecondsInSecond)
             ).toString().split('GMT')[0] + ' UTC'
         ).toISOString().split('.')[0];
 

@@ -70,6 +70,7 @@ const { dateTime } = require('js-automation-tools');
 const pastDateTimePlusDay = dateTime.generateDateTimePlusDays(1, '2024-03-14T00:14:25'); // '2024-03-15T00:14:25'
 const pastDateTimePlusHour = dateTime.generateDateTimePlusHours(1, '2024-03-14T00:14:25'); // '2024-03-14T01:14:25'
 const pastDateTimePlusMinute = dateTime.generateDateTimePlusMinutes(1, '2024-03-14T00:14:25'); // '2024-03-14T00:15:25'
+const pastDateTimePlusSecond = dateTime.generateDateTimePlusSeconds(1, '2024-03-14T00:14:25'); // '2024-03-14T00:14:26'
 ```
 It will also write generated date and time to a global environment variable
 `process.env.DATETIME` and `process.env.DATETIME_PLUS_DAYS`,
