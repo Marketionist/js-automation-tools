@@ -54,29 +54,35 @@ this:
 ```
 const { dateTime } = require('js-automation-tools');
 
-const currentDateTime = dateTime.generateDateTime(); // '2024-03-14T00:14:25'
-const currentDateTimePlusDay = dateTime.generateDateTimePlusDays(1); // '2024-03-15T01:14:25'
-const currentDateTimePlusHour = dateTime.generateDateTimePlusHours(1); // '2024-03-14T01:14:25'
-const currentDateTimePlusMinute = dateTime.generateDateTimePlusMinutes(1); // '2024-03-14T00:15:25'
-const currentDateTimePlusSecond = dateTime.generateDateTimePlusSeconds(1); // '2024-03-14T00:14:26'
+const currentDateTime = dateTime.generateDateTime(); // '2024-09-23T19:26:35'
+const currentDateTimePlusDay = dateTime.generateDateTimePlus({ days: 1 }); // '2024-09-24T19:26:35'
+const currentDateTimePlusHour = dateTime.generateDateTimePlus({ hours: 1 }); // '2024-09-23T20:26:35'
+const currentDateTimePlusMinute = dateTime.generateDateTimePlus({ minutes: 1 }); // '2024-09-23T19:27:35'
+const currentDateTimePlusSecond = dateTime.generateDateTimePlus({ seconds: 1 }); // '2024-09-23T19:26:36'
 
-const currentDateTimeMinusHour = dateTime.generateDateTimeMinusHours(1); // '2024-03-13T23:14:25'
+const currentDateTimeMinusHour = dateTime.generateDateTimePlus({ hours: -1 }); // '2024-09-23T18:26:35'
 ```
-Also you can call these functions with an optional second argument - an initial
-date to add days/hours/minutes/seconds to that date:
+Also you can call these functions with an optional initial date - to add
+days/hours/minutes/seconds to that date:
 ```
 const { dateTime } = require('js-automation-tools');
 
-const pastDateTimePlusDay = dateTime.generateDateTimePlusDays(1, '2024-03-14T00:14:25'); // '2024-03-15T00:14:25'
-const pastDateTimePlusHour = dateTime.generateDateTimePlusHours(1, '2024-03-14T00:14:25'); // '2024-03-14T01:14:25'
-const pastDateTimePlusMinute = dateTime.generateDateTimePlusMinutes(1, '2024-03-14T00:14:25'); // '2024-03-14T00:15:25'
-const pastDateTimePlusSecond = dateTime.generateDateTimePlusSeconds(1, '2024-03-14T00:14:25'); // '2024-03-14T00:14:26'
+const pastDateTimePlusDay = dateTime.generateDateTimePlus({ days: 1, initialDate: '2024-03-14T00:14:25' }); // '2024-03-15T00:14:25'
+const pastDateTimePlusHour = dateTime.generateDateTimePlus({ hours: 1, initialDate: '2024-03-14T00:14:25' }); // '2024-03-14T01:14:25'
+const pastDateTimePlusMinute = dateTime.generateDateTimePlus({ minutes: 1, initialDate: '2024-03-14T00:14:25' }); // '2024-03-14T00:15:25'
+const pastDateTimePlusSecond = dateTime.generateDateTimePlus({ seconds: 1, initialDate: '2024-03-14T00:14:25' }); // '2024-03-14T00:14:26'
+
+const pastDateTimePlusDayHourMinuteSecond = dateTime.generateDateTimePlus({
+    days: 1,
+    hours: 1,
+    minutes: 1,
+    seconds: 1,
+    initialDate: '2024-03-14T00:14:25'
+}); // '2024-03-15T01:15:26'
 ```
 It will also write generated date and time to a global environment variable
-`process.env.DATETIME` and `process.env.DATETIME_PLUS_DAYS`,
-`process.env.DATETIME_PLUS_HOURS`, `process.env.DATETIME_PLUS_MINUTES`,
-`process.env.DATETIME_PLUS_SECONDS`, `process.env.DATETIME_MINUS_HOURS` that can
-be easily accessed in any place of your tests.
+`process.env.DATETIME` and `process.env.NEW_DATETIME` that can be easily
+accessed in any place of your tests.
 
 ## Send GET, POST or any other requests
 Send request to any URL and get response - `sendRequest` function accepts 
