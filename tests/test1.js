@@ -40,68 +40,68 @@ console.log(
     `${currentDateTime === process.env.DATETIME} ${process.env.DATETIME}`
 );
 
-const currentDateTimePlusDay = dateTime.generateDateTimePlusDays(1);
+const currentDateTimePlusDay = dateTime.generateDateTimePlus({ days: 1 });
 
 console.log(
-    'currentDateTimePlusDay in process.env.DATETIME_PLUS_DAYS: ' +
-    `${currentDateTimePlusDay === process.env.DATETIME_PLUS_DAYS} ` +
-    process.env.DATETIME_PLUS_DAYS
+    'currentDateTimePlusDay in process.env.NEW_DATETIME: ' +
+    `${currentDateTimePlusDay === process.env.NEW_DATETIME} ` +
+    process.env.NEW_DATETIME
 );
 
-const pastDateTimePlusDay = dateTime.generateDateTimePlusDays(1, '2024-03-14T00:14:25');
+const pastDateTimePlusDay = dateTime.generateDateTimePlus({ days: 1, initialDate: '2024-03-14T00:14:25' });
 
 console.log(
-    'pastDateTimePlusDay in process.env.DATETIME_PLUS_DAYS: ' +
-    `${pastDateTimePlusDay === process.env.DATETIME_PLUS_DAYS} ` +
-    process.env.DATETIME_PLUS_DAYS
+    'pastDateTimePlusDay in process.env.NEW_DATETIME: ' +
+    `${pastDateTimePlusDay === process.env.NEW_DATETIME} ` +
+    process.env.NEW_DATETIME
 );
 
-const currentDateTimePlusHour = dateTime.generateDateTimePlusHours(1);
+const currentDateTimePlusHour = dateTime.generateDateTimePlus({ hours: 1 });
 
 console.log(
-    'currentDateTimePlusHour in process.env.DATETIME_PLUS_HOURS: ' +
-    `${currentDateTimePlusHour === process.env.DATETIME_PLUS_HOURS} ` +
-    process.env.DATETIME_PLUS_HOURS
+    'currentDateTimePlusHour in process.env.NEW_DATETIME: ' +
+    `${currentDateTimePlusHour === process.env.NEW_DATETIME} ` +
+    process.env.NEW_DATETIME
 );
 
-const pastDateTimePlusHour = dateTime.generateDateTimePlusHours(1, '2024-03-14T00:14:25');
+const pastDateTimePlusHour = dateTime.generateDateTimePlus({ hours: 1, initialDate: '2024-03-14T00:14:25' });
 
 console.log(
-    'pastDateTimePlusHour in process.env.DATETIME_PLUS_HOURS: ' +
-    `${pastDateTimePlusHour === process.env.DATETIME_PLUS_HOURS} ` +
-    process.env.DATETIME_PLUS_HOURS
+    'pastDateTimePlusHour in process.env.NEW_DATETIME: ' +
+    `${pastDateTimePlusHour === process.env.NEW_DATETIME} ` +
+    process.env.NEW_DATETIME
 );
 
-const currentDateTimePlusMinute = dateTime.generateDateTimePlusMinutes(1);
+const currentDateTimePlusMinute = dateTime.generateDateTimePlus({ minutes: 1 });
 
 console.log(
-    'currentDateTimePlusMinute in process.env.DATETIME_PLUS_MINUTES: ' +
-    `${currentDateTimePlusMinute === process.env.DATETIME_PLUS_MINUTES} ` +
-    process.env.DATETIME_PLUS_MINUTES
+    'currentDateTimePlusMinute in process.env.NEW_DATETIME: ' +
+    `${currentDateTimePlusMinute === process.env.NEW_DATETIME} ` +
+    process.env.NEW_DATETIME
 );
 
-const pastDateTimePlusMinute = dateTime.generateDateTimePlusMinutes(1, '2024-03-14T00:14:25');
+const pastDateTimePlusMinute = dateTime.generateDateTimePlus({ minutes: 1, initialDate: '2024-03-14T00:14:25' });
 
 console.log(
-    'pastDateTimePlusMinute in process.env.DATETIME_PLUS_MINUTES: ' +
-    `${pastDateTimePlusMinute === process.env.DATETIME_PLUS_MINUTES} ` +
-    process.env.DATETIME_PLUS_MINUTES
+    'pastDateTimePlusMinute in process.env.NEW_DATETIME: ' +
+    `${pastDateTimePlusMinute === process.env.NEW_DATETIME} ` +
+    process.env.NEW_DATETIME
 );
 
-const currentDateTimePlusSecond = dateTime.generateDateTimePlusSeconds(1);
+const currentDateTimePlusSecond = dateTime.generateDateTimePlus({ seconds: 1 });
 
 console.log(
-    'currentDateTimePlusSecond in process.env.DATETIME_PLUS_SECONDS: ' +
-    `${currentDateTimePlusSecond === process.env.DATETIME_PLUS_SECONDS} ` +
-    process.env.DATETIME_PLUS_SECONDS
+    'currentDateTimePlusSecond in process.env.NEW_DATETIME: ' +
+    `${currentDateTimePlusSecond === process.env.NEW_DATETIME} ` +
+    process.env.NEW_DATETIME
 );
 
-const pastDateTimePlusSecond = dateTime.generateDateTimePlusSeconds(1, '2024-03-14T00:14:25');
+const pastDateTimePlusSecond = dateTime.generateDateTimePlus({ seconds: 1, initialDate: '2024-03-14T00:14:25' });
 
 console.log(
-    'pastDateTimePlusSecond in process.env.DATETIME_PLUS_SECONDS: ' +
-    `${pastDateTimePlusSecond === process.env.DATETIME_PLUS_SECONDS} ` +
-    process.env.DATETIME_PLUS_SECONDS
+    'pastDateTimePlusSecond in process.env.NEW_DATETIME: ' +
+    `${pastDateTimePlusSecond === process.env.NEW_DATETIME} ` +
+    process.env.NEW_DATETIME
 );
 
 if (
@@ -110,9 +110,9 @@ if (
         (Date.parse(currentDateTimePlusMinute) > Date.parse(currentDateTimePlusSecond)) &&
         (Date.parse(currentDateTimePlusSecond) > Date.parse(currentDateTime))
 ) {
-    console.log('currentDateTimePlus Day/Hour/Minute/Second looks ok!');
+    console.log('currentDateTimePlus day/hour/minute/second looks ok!');
 } else {
-    throw new Error('currentDateTimePlus Day/Hour/Minute/Second should be more than currentDateTime');
+    throw new Error('currentDateTimePlus day/hour/minute/second should be more than currentDateTime');
 }
 
 if (
@@ -121,25 +121,25 @@ if (
         (Date.parse(pastDateTimePlusHour) > Date.parse(pastDateTimePlusMinute)) &&
         (Date.parse(pastDateTimePlusMinute) > Date.parse(pastDateTimePlusSecond))
 ) {
-    console.log('pastDateTimePlus Day/Hour/Minute/Second looks ok!');
+    console.log('pastDateTimePlus day/hour/minute/second looks ok!');
 } else {
-    throw new Error('pastDateTimePlus Day/Hour/Minute/Second should be less than currentDateTime');
+    throw new Error('pastDateTimePlus day/hour/minute/second should be less than currentDateTime');
 }
 
-const currentDateTimeMinusHour = dateTime.generateDateTimeMinusHours(1);
+const currentDateTimeMinusHour = dateTime.generateDateTimePlus({ hours: -1 });
 
 console.log(
-    'process.env.DATETIME_MINUS_HOURS: ' +
-    `${currentDateTimeMinusHour === process.env.DATETIME_MINUS_HOURS} ` +
-    process.env.DATETIME_MINUS_HOURS
+    'currentDateTimeMinusHour in process.env.NEW_DATETIME: ' +
+    `${currentDateTimeMinusHour === process.env.NEW_DATETIME} ` +
+    process.env.NEW_DATETIME
 );
 
 if (
     Date.parse(currentDateTimeMinusHour) < Date.parse(currentDateTime)
 ) {
-    console.log('currentDateTimeMinus Hour looks ok!');
+    console.log('currentDateTimePlus -1 hour looks ok!');
 } else {
-    throw new Error('currentDateTimeMinus Hour should be less than currentDateTime');
+    throw new Error('currentDateTimePlus -1 hour should be less than currentDateTime');
 }
 
 (async () => {
