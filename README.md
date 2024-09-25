@@ -49,23 +49,27 @@ console.log(process.env.TIMESTAMP); // '1588558255810'
 ```
 
 ## Generate current date and time
-Sometimes you need to generate current date and time. It can easily be done like
-this:
+Sometimes you need to generate current date and time. It can easily be done with `generateDateTime` function:
 ```
 const { dateTime } = require('js-automation-tools');
 
 const currentDateTime = dateTime.generateDateTime(); // '2024-09-23T19:26:35'
+```
+Also you can use a `generateDateTimePlus` function that generates current (if no initial date is provided) date and time plus number of days, hours, minutes, seconds if they are provided. This function accepts configuration object with 5 arguments:
+1. `days` - number of days that will be added to current (if no initial date is provided) date and time (optional, default value: `0`).
+2. `hours` - number of hours that will be added to current (if no initial date is provided) date and time (optional, default value: `0`).
+3. `minutes` - number of minutes that will be added to current (if no initial date is provided) date and time (optional, default value: `0`).
+4. `seconds` - number of seconds that will be added to current (if no initial date is provided) date and time (optional, default value: `0`).
+5. `initialDate` - string with initial date and time that you want to add a number of days, hours, minutes, seconds to (for example: '2024-03-14T00:14:25', optional, default value: current date and time).
+```
+const { dateTime } = require('js-automation-tools');
+
 const currentDateTimePlusDay = dateTime.generateDateTimePlus({ days: 1 }); // '2024-09-24T19:26:35'
 const currentDateTimePlusHour = dateTime.generateDateTimePlus({ hours: 1 }); // '2024-09-23T20:26:35'
 const currentDateTimePlusMinute = dateTime.generateDateTimePlus({ minutes: 1 }); // '2024-09-23T19:27:35'
 const currentDateTimePlusSecond = dateTime.generateDateTimePlus({ seconds: 1 }); // '2024-09-23T19:26:36'
 
 const currentDateTimeMinusHour = dateTime.generateDateTimePlus({ hours: -1 }); // '2024-09-23T18:26:35'
-```
-Also you can call these functions with an optional initial date - to add
-days/hours/minutes/seconds to that date:
-```
-const { dateTime } = require('js-automation-tools');
 
 const pastDateTimePlusDay = dateTime.generateDateTimePlus({ days: 1, initialDate: '2024-03-14T00:14:25' }); // '2024-03-15T00:14:25'
 const pastDateTimePlusHour = dateTime.generateDateTimePlus({ hours: 1, initialDate: '2024-03-14T00:14:25' }); // '2024-03-14T01:14:25'
@@ -89,9 +93,9 @@ Send request to any URL and get response - `sendRequest` function accepts
 configuration object with 5 arguments:
 1. `method` - string (for example: `'GET'` or `'POST'` or `'DELETE'` or any other).
 2. `requestUrl` - string with URL of endpoint to send request to (for example: `'https://www.google.com/'`).
-3. `headersString` - string that contains request headers (for example: `'{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }'`).
-4. `bodyString` - string that contains request body (for example: `'{ "test1": 1, "test2": 2 }'`).
-5. `logLevel` - number (for example: `0` or `1` or `2`, default value: `0` - no logs).
+3. `headersString` - string that contains request headers (for example: `'{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }'`, optional).
+4. `bodyString` - string that contains request body (for example: `'{ "test1": 1, "test2": 2 }'`, optional).
+5. `logLevel` - number (for example: `0` or `1` or `2`, optional, default value: `0` - no logs).
 
 Also you can just call `sendRequest` function without `headersString`,
 `bodyString`, `logLevel` arguments if they are not needed - for example in GET
@@ -138,10 +142,10 @@ check will be `true` or the amount of provided attempts will be exceeded -
     ```
 2. `functionCheck` - function to execute to check the result of
     `functionToExecute` (if successful - should return `true`, for example:
-    `(responseBody) => responseBody.length > 0`).
-3. `attempts` - number of attempts to retry (default value: `10`).
-4. `waitTime` - time to wait between retries (in milliseconds, default value: `1000`).
-5. `logLevel` - number (for example: `0` or `1` or `2`, default value: `0` - no logs).
+    `(responseBody) => responseBody.length > 0`, optional).
+3. `attempts` - number of attempts to retry (optional, default value: `10`).
+4. `waitTime` - time to wait between retries in milliseconds (optional, default value: `1000`).
+5. `logLevel` - number (for example: `0` or `1` or `2`, optional, default value: `0` - no logs).
 
 > Note: you have to specify the `retryIfFalse` arguments inside the
 > configuration object as `key: value` pairs:
