@@ -21,10 +21,10 @@ const ERROR_FAILED_FUNCTION_TO_EXECUTE = '\n-> Provided number of attempts was e
  * (`functionCheck`) check will be `true` or the amount of provided attempts (`attempts`) will be exceeded.
  * @param {Object} configurationObject configuration object with parameters, for example: `{ functionToExecute: myFunction, functionCheck: checkFunction, attempts: 20, waitTime: 5000, logLevel: 2 }`.
  * @param {Function} configurationObject.functionToExecute function to execute (for example an API request).
- * @param {Function|_returnResult} configurationObject.functionCheck function to execute to check the result of `functionToExecute` (if successful - should return `true`, for example: `(responseBody) => responseBody.length > 0`).
- * @param {Number|_attemptsDefault} configurationObject.attempts number of attempts to retry (default value: `10`).
- * @param {Number|_waitTimeDefault} configurationObject.waitTime time to wait between retries (in milliseconds, default value: `1000`).
- * @param {Number|_logLevelDefault} configurationObject.logLevel number (for example: `0` or `1` or `2`, default value: `0` - no logs).
+ * @param {Function=} configurationObject.functionCheck function to execute to check the result of `functionToExecute` (if successful - should return `true`, for example: `(responseBody) => responseBody.length > 0`, optional).
+ * @param {Number=} configurationObject.attempts number of attempts to retry (optional, default value: `10`).
+ * @param {Number=} configurationObject.waitTime time to wait between retries in milliseconds (optional, default value: `1000`).
+ * @param {Number=} configurationObject.logLevel number (for example: `0` or `1` or `2`, optional, default value: `0` - no logs).
  * @returns {Promise} response of a function that was provided for execution.
  */
 async function retryIfFalse ({
