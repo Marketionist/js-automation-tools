@@ -51,9 +51,9 @@ function _handleResponse (response, logLevel, callbackFunction) {
  * @param {Object} configurationObject configuration object with parameters, for example: `{ method: 'POST', requestUrl: 'http://httpbin.org/post', headersString: '{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }', bodyString: '{ "test1": 1, "test2": 2 }', logLevel: 1 }`.
  * @param {String} configurationObject.method string with method `'GET'` or `'POST'` or `'DELETE'` or any other.
  * @param {String} configurationObject.requestUrl string with URL of endpoint to send request to (for example: `'https://www.google.com/'`).
- * @param {String|_emptyString} configurationObject.headersString string that contains request headers (for example: `'{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }'`).
- * @param {String|_emptyString} configurationObject.bodyString string that contains request body (for example: `'{ "test1": 1, "test2": 2 }'`).
- * @param {Number|_logLevelDefault} configurationObject.logLevel number (for example: `0` or `1` or `2`, default value: `0` - no logs).
+ * @param {String=} configurationObject.headersString string that contains request headers (for example: `'{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }'`, optional).
+ * @param {String=} configurationObject.bodyString string that contains request body (for example: `'{ "test1": 1, "test2": 2 }'`, optional).
+ * @param {Number=} configurationObject.logLevel number (for example: `0` or `1` or `2`, optional, default value: `0` - no logs).
  * @returns {Promise} response from endpoint. Resolves into an object with `statusCode`, `headers`, `body`.
  */
 function sendRequest ({
