@@ -41,20 +41,18 @@ let dateTime = {
         initialDate: initialDate
     }) {
         /* eslint-enable max-len */
-        /* eslint-disable no-param-reassign */
-        days = arguments[0].days || _zero;
-        hours = arguments[0].hours || _zero;
-        minutes = arguments[0].minutes || _zero;
-        seconds = arguments[0].seconds || _zero;
-        initialDate = arguments[0].initialDate || Date.now();
-        /* eslint-enable no-param-reassign */
+        const daysValue = days || _zero;
+        const hoursValue = hours || _zero;
+        const minutesValue = minutes || _zero;
+        const secondsValue = seconds || _zero;
+        const initialDateValue = initialDate || Date.now();
 
         process.env.NEW_DATETIME = new Date(
-            new Date(new Date(initialDate).getTime() +
-                days * (_hoursInDay * _minutesInHour * _secondsInMinute * _millisecondsInSecond) +
-                hours * (_minutesInHour * _secondsInMinute * _millisecondsInSecond) +
-                minutes * (_secondsInMinute * _millisecondsInSecond) +
-                (seconds * _millisecondsInSecond)
+            new Date(new Date(initialDateValue).getTime() +
+                daysValue * (_hoursInDay * _minutesInHour * _secondsInMinute * _millisecondsInSecond) +
+                hoursValue * (_minutesInHour * _secondsInMinute * _millisecondsInSecond) +
+                minutesValue * (_secondsInMinute * _millisecondsInSecond) +
+                (secondsValue * _millisecondsInSecond)
             ).toString().split('GMT')[0] + ' UTC'
         ).toISOString().split('.')[0];
 

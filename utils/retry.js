@@ -35,43 +35,44 @@ async function retryIfFalse ({
     logLevel: logLevel
 }) {
     /* eslint-enable max-len */
-    /* eslint-disable no-param-reassign */
-    functionCheck = arguments[0].functionCheck || _returnResult;
-    attempts = arguments[0].attempts || _attemptsDefault;
-    waitTime = arguments[0].waitTime || _waitTimeDefault;
-    logLevel = arguments[0].logLevel || _logLevelDefault;
-    /* eslint-enable no-param-reassign */
+    const functionCheckValue = functionCheck || _returnResult;
+    const attemptsValue = attempts || _attemptsDefault;
+    const waitTimeValue = waitTime || _waitTimeDefault;
+    const logLevelValue = logLevel || _logLevelDefault;
+
     if (functionToExecute === undefined || typeof functionToExecute !== 'function') {
         throw new Error(ERROR_SPECIFY_FUNCTION_TO_EXECUTE);
     }
-    if (typeof functionCheck !== 'function') {
+    if (typeof functionCheckValue !== 'function') {
         throw new Error(ERROR_SPECIFY_FUNCTION_CHECK);
     }
     const result = new Promise((resolve, reject) => {
         let iteration = 0;
         const intervalId = setInterval(async () => {
-            if (logLevel > 0) {
+            if (logLevelValue > 0) {
                 console.info(NOTIFICATION_ATTEMPT_NUMBER, functionToExecute.name, iteration);
             }
             const res = await functionToExecute();
 
-            if (logLevel === 2) {
+            if (logLevelValue === 2) {
                 console.info(
                     `${NOTIFICATION_FUNCTION_TO_EXECUTE_RESPONSE} ${functionToExecute.name}:`,
                     JSON.stringify(res, null, _spacesToIndent)
                 );
             }
 
-            if (functionCheck(res)) {
+            if (functionCheckValue(res)) {
                 clearInterval(intervalId);
                 return resolve(res);
-            } else if (iteration < attempts) {
+            } else if (iteration < attemptsValue) {
                 iteration++;
             } else {
                 clearInterval(intervalId);
-                return reject(new Error(`${ERROR_FAILED_FUNCTION_TO_EXECUTE} ${functionToExecute.name} x ${attempts}`));
+                return reject(new Error(
+                    `${ERROR_FAILED_FUNCTION_TO_EXECUTE} ${functionToExecute.name} x ${attemptsValue}`
+                ));
             }
-        }, waitTime)
+        }, waitTimeValue)
     });
 
     return result;

@@ -15,19 +15,20 @@ const statP = promisify(stat);
  * @param {Array} allFiles array with file paths.
  * @returns {Array} array with file paths.
  */
-async function readDirectory (directory, allFiles = []) {
-    const files = (await readdirP(directory)).map((file) => {
-        return join(directory, file);
+async function _readDirectory (directory, allFiles) {
+    const files = (await readdirP(directory)).map((filePath) => {
+        return join(directory, filePath);
     });
+    let allFilesPaths = allFiles || [];
 
-    allFiles.push(...files);
+    allFilesPaths.push(...files);
     await Promise.all(
         files.map(async (f) => {
-            return (await statP(f)).isDirectory() && readDirectory(f, allFiles);
+            return (await statP(f)).isDirectory() && _readDirectory(f, allFilesPaths);
         })
     );
 
-    return allFiles;
+    return allFilesPaths;
 }
 
 /**
@@ -36,19 +37,19 @@ async function readDirectory (directory, allFiles = []) {
  * @returns {Array} array with file paths.
  */
 async function readDirectories (directories) {
-    const allFilesFinal = [];
+    let allFilesPaths = [];
 
     (await Promise.all(
         directories.map(async (dir) => {
-            let files = await readDirectory(dir);
+            let files = await _readDirectory(dir);
 
             return files;
         })
     )).map((value) => {
-        allFilesFinal.push(...value);
+        allFilesPaths.push(...value);
     });
 
-    return allFilesFinal;
+    return allFilesPaths;
 }
 
 module.exports = readDirectories;
