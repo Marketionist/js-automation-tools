@@ -64,11 +64,10 @@ function sendRequest ({
     logLevel: logLevel
 }) {
     /* eslint-enable max-len */
-    /* eslint-disable no-param-reassign */
-    headersString = arguments[0].headersString || _emptyString;
-    bodyString = arguments[0].bodyString || _emptyString;
-    logLevel = arguments[0].logLevel || _logLevelDefault;
-    /* eslint-enable no-param-reassign */
+    const headersStringValue = headersString || _emptyString;
+    const bodyStringValue = bodyString || _emptyString;
+    const logLevelValue = logLevel || _logLevelDefault;
+
     if (method.length === 0) {
         console.log('\n-> Problem with request method - please specify it ' +
             'as a string (for example: \'GET\' or \'POST\' or \'DELETE\' or ' +
@@ -81,12 +80,12 @@ function sendRequest ({
 
     return new Promise((resolve, reject) => {
         // Check incoming body string to have proper JSON inside of it
-        const requestBody = bodyString.length > 0 ? JSON.stringify(JSON.parse(bodyString)) : '';
+        const requestBody = bodyStringValue.length > 0 ? JSON.stringify(JSON.parse(bodyStringValue)) : _emptyString;
         const contentType = method.toUpperCase() === 'GET' ? 'text/html' : 'application/json';
 
         // Check incoming headers string to have proper JSON inside of it
-        const requestHeaders = headersString.length > 0 ?
-            JSON.parse(headersString) :
+        const requestHeaders = headersStringValue.length > 0 ?
+            JSON.parse(headersStringValue) :
             {
                 'Content-Type': contentType,
                 'Connection': 'close',
@@ -109,11 +108,11 @@ function sendRequest ({
 
         if (requestUrl.includes('https')) {
             req = https.request(options, (res) => {
-                _handleResponse(res, logLevel, resolve);
+                _handleResponse(res, logLevelValue, resolve);
             });
         } else {
             req = http.request(options, (res) => {
-                _handleResponse(res, logLevel, resolve);
+                _handleResponse(res, logLevelValue, resolve);
             });
         }
 
