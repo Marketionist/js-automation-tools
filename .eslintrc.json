@@ -62,8 +62,8 @@
         "use-isnan": "error",
         "valid-jsdoc": ["error", {
             "requireReturn": false,
-            "requireParamDescription": false,
-            "requireReturnDescription": false,
+            "requireParamDescription": true,
+            "requireReturnDescription": true,
             "prefer": {
                 "return": "returns"
             }
