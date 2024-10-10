@@ -55,7 +55,7 @@ const { dateTime } = require('js-automation-tools');
 
 const currentDateTime = dateTime.generateDateTime(); // '2024-09-23T19:26:35'
 ```
-Also you can use a `generateDateTimePlus` function that generates current (if no initial date is provided) date and time plus number of days, hours, minutes, seconds if they are provided. This function accepts configuration object with 5 arguments:
+Also you can use `generateDateTimePlus` function that generates current (if no initial date is provided) date and time plus number of days, hours, minutes, seconds if they are provided. This function accepts configuration object with 5 arguments:
 1. `days` - number of days that will be added to current (if no initial date is provided) date and time (optional, default value: `0`).
 2. `hours` - number of hours that will be added to current (if no initial date is provided) date and time (optional, default value: `0`).
 3. `minutes` - number of minutes that will be added to current (if no initial date is provided) date and time (optional, default value: `0`).
