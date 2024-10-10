@@ -72,7 +72,7 @@ async function retryIfFalse ({
                     `${ERROR_FAILED_FUNCTION_TO_EXECUTE} ${functionToExecute.name} x ${attemptsValue}`
                 ));
             }
-        }, waitTimeValue)
+        }, waitTimeValue);
     });
 
     return result;

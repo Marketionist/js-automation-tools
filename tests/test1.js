@@ -209,7 +209,7 @@ if (
     const pathToDirectory1 = path.join(__dirname, '..', 'utils');
     const pathToDirectory2 = path.join(__dirname);
 
-    const allFiles = await readDirectories([pathToDirectory1, pathToDirectory2]);
+    const allFiles = await readDirectories([pathToDirectory1, pathToDirectory2,]);
 
     console.log('allFiles array:');
     allFiles.map((value) => {
