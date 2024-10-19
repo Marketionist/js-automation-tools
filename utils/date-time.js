@@ -38,7 +38,7 @@ let dateTime = {
         hours: hours,
         minutes: minutes,
         seconds: seconds,
-        initialDate: initialDate
+        initialDate: initialDate,
     }) {
         /* eslint-enable max-len */
         const daysValue = days || _zero;
@@ -57,7 +57,7 @@ let dateTime = {
         ).toISOString().split('.')[0];
 
         return process.env.NEW_DATETIME;
-    }
+    },
 };
 
 module.exports = dateTime;

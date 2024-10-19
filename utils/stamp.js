@@ -31,7 +31,7 @@ let stamp = {
             this.resetTimestamp();
 
         return process.env.TIMESTAMP;
-    }
+    },
 };
 
 module.exports = stamp;

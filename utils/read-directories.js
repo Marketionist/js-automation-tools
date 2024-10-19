@@ -2,9 +2,9 @@
 
 // #############################################################################
 
-const { join } = require('path');
-const { readdir, stat } = require('fs');
-const { promisify } = require('util');
+const { join, } = require('path');
+const { readdir, stat, } = require('fs');
+const { promisify, } = require('util');
 
 const readdirP = promisify(readdir);
 const statP = promisify(stat);
