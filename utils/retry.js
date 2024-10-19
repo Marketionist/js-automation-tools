@@ -32,7 +32,7 @@ async function retryIfFalse ({
     functionCheck: functionCheck,
     attempts: attempts,
     waitTime: waitTime,
-    logLevel: logLevel
+    logLevel: logLevel,
 }) {
     /* eslint-enable max-len */
     const functionCheckValue = functionCheck || _returnResult;

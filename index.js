@@ -13,5 +13,5 @@ module.exports = {
     stamp: stamp,
     dateTime: dateTime,
     retryIfFalse: retryIfFalse,
-    sendRequest: sendRequest
+    sendRequest: sendRequest,
 };

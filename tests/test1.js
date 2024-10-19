@@ -4,7 +4,7 @@ const {
     dateTime,
     retryIfFalse,
     sendRequest,
-    readDirectories
+    readDirectories,
 } = require('../index.js');
 
 // Test randomDigits
@@ -40,7 +40,7 @@ console.log(
     `${currentDateTime === process.env.DATETIME} ${process.env.DATETIME}`
 );
 
-const currentDateTimePlusDay = dateTime.generateDateTimePlus({ days: 1 });
+const currentDateTimePlusDay = dateTime.generateDateTimePlus({ days: 1, });
 
 console.log(
     'currentDateTimePlusDay in process.env.NEW_DATETIME: ' +
@@ -48,7 +48,7 @@ console.log(
     process.env.NEW_DATETIME
 );
 
-const pastDateTimePlusDay = dateTime.generateDateTimePlus({ days: 1, initialDate: '2024-03-14T00:14:25' });
+const pastDateTimePlusDay = dateTime.generateDateTimePlus({ days: 1, initialDate: '2024-03-14T00:14:25', });
 
 console.log(
     'pastDateTimePlusDay in process.env.NEW_DATETIME: ' +
@@ -56,7 +56,7 @@ console.log(
     process.env.NEW_DATETIME
 );
 
-const currentDateTimePlusHour = dateTime.generateDateTimePlus({ hours: 1 });
+const currentDateTimePlusHour = dateTime.generateDateTimePlus({ hours: 1, });
 
 console.log(
     'currentDateTimePlusHour in process.env.NEW_DATETIME: ' +
@@ -64,7 +64,7 @@ console.log(
     process.env.NEW_DATETIME
 );
 
-const pastDateTimePlusHour = dateTime.generateDateTimePlus({ hours: 1, initialDate: '2024-03-14T00:14:25' });
+const pastDateTimePlusHour = dateTime.generateDateTimePlus({ hours: 1, initialDate: '2024-03-14T00:14:25', });
 
 console.log(
     'pastDateTimePlusHour in process.env.NEW_DATETIME: ' +
@@ -72,7 +72,7 @@ console.log(
     process.env.NEW_DATETIME
 );
 
-const currentDateTimePlusMinute = dateTime.generateDateTimePlus({ minutes: 1 });
+const currentDateTimePlusMinute = dateTime.generateDateTimePlus({ minutes: 1, });
 
 console.log(
     'currentDateTimePlusMinute in process.env.NEW_DATETIME: ' +
@@ -80,7 +80,7 @@ console.log(
     process.env.NEW_DATETIME
 );
 
-const pastDateTimePlusMinute = dateTime.generateDateTimePlus({ minutes: 1, initialDate: '2024-03-14T00:14:25' });
+const pastDateTimePlusMinute = dateTime.generateDateTimePlus({ minutes: 1, initialDate: '2024-03-14T00:14:25', });
 
 console.log(
     'pastDateTimePlusMinute in process.env.NEW_DATETIME: ' +
@@ -88,7 +88,7 @@ console.log(
     process.env.NEW_DATETIME
 );
 
-const currentDateTimePlusSecond = dateTime.generateDateTimePlus({ seconds: 1 });
+const currentDateTimePlusSecond = dateTime.generateDateTimePlus({ seconds: 1, });
 
 console.log(
     'currentDateTimePlusSecond in process.env.NEW_DATETIME: ' +
@@ -96,7 +96,7 @@ console.log(
     process.env.NEW_DATETIME
 );
 
-const pastDateTimePlusSecond = dateTime.generateDateTimePlus({ seconds: 1, initialDate: '2024-03-14T00:14:25' });
+const pastDateTimePlusSecond = dateTime.generateDateTimePlus({ seconds: 1, initialDate: '2024-03-14T00:14:25', });
 
 console.log(
     'pastDateTimePlusSecond in process.env.NEW_DATETIME: ' +
@@ -126,7 +126,7 @@ if (
     throw new Error('pastDateTimePlus day/hour/minute/second should be less than currentDateTime');
 }
 
-const currentDateTimeMinusHour = dateTime.generateDateTimePlus({ hours: -1 });
+const currentDateTimeMinusHour = dateTime.generateDateTimePlus({ hours: -1, });
 
 console.log(
     'currentDateTimeMinusHour in process.env.NEW_DATETIME: ' +
@@ -151,7 +151,7 @@ if (
         requestUrl: 'http://httpbin.org/post',
         headersString: '{ "Content-Type": "application/json", "Authorization": "Bearer aBcD1234" }',
         bodyString: '{ "test1": 1, "test2": 2 }',
-        logLevel: logLevel
+        logLevel: logLevel,
     });
 
     console.log('responsePost from sendRequest:', responsePost);
@@ -162,7 +162,7 @@ if (
         method: 'POST',
         headersString: '{ "Content-Type": "application/json", "Authorization": "Bearer EfGh5678" }',
         logLevel: logLevel,
-        bodyString: '{ "test3": 3, "test4": 4 }'
+        bodyString: '{ "test3": 3, "test4": 4 }',
     });
 
     console.log('responsePost from sendRequest with mixed arguments:', responsePostMixed);
@@ -182,7 +182,7 @@ if (
     };
     const retryIfFalseSimpleResult = await retryIfFalse({
         functionToExecute: myFunctionSimple,
-        logLevel: logLevel
+        logLevel: logLevel,
     });
 
     console.log(`retryIfFalseSimpleResult: ${retryIfFalseSimpleResult}`);
@@ -200,7 +200,7 @@ if (
         functionCheck: checkFunction,
         attempts: 20,
         waitTime: 1000,
-        logLevel: logLevel
+        logLevel: logLevel,
     });
 
     console.log(`retryIfFalseResult: ${retryIfFalseResult}`);

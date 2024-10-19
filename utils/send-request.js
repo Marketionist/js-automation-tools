@@ -41,7 +41,7 @@ function _handleResponse (response, logLevel, callbackFunction) {
             console.log(`\n-> Response body: ${res}`);
         }
         // Resolve after response was finished and all data from response was accumulated
-        callbackFunction({ statusCode: response.statusCode, headers: response.headers, body: data });
+        callbackFunction({ statusCode: response.statusCode, headers: response.headers, body: data, });
     });
 }
 
@@ -61,7 +61,7 @@ function sendRequest ({
     requestUrl: requestUrl,
     headersString: headersString,
     bodyString: bodyString,
-    logLevel: logLevel
+    logLevel: logLevel,
 }) {
     /* eslint-enable max-len */
     const headersStringValue = headersString || _emptyString;
@@ -89,7 +89,7 @@ function sendRequest ({
             {
                 'Content-Type': contentType,
                 'Connection': 'close',
-                'Content-Length': Buffer.byteLength(requestBody)
+                'Content-Length': Buffer.byteLength(requestBody),
             };
 
         const parsedUrl = new url.URL(requestUrl);
@@ -101,7 +101,7 @@ function sendRequest ({
             hash: parsedUrl.hash,
             port: parsedUrl.port,
             method: method,
-            headers: requestHeaders
+            headers: requestHeaders,
         };
 
         let req;
