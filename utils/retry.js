@@ -61,7 +61,7 @@ async function retryIfFalse ({
                 );
             }
 
-            if (functionCheckValue(res)) {
+            if (await functionCheckValue(res)) {
                 clearInterval(intervalId);
                 return resolve(res);
             } else if (iteration < attemptsValue) {
